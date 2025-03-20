@@ -1,0 +1,36 @@
+@Nimbus.WebApi_HostAddress = https://localhost:7166
+
+GET {{Nimbus.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET {{Nimbus.WebApi_HostAddress}}/api/truckentities
+
+###
+
+GET {{Nimbus.WebApi_HostAddress}}/api/routeentities
+
+###
+
+GET {{Nimbus.WebApi_HostAddress}}/api/addresses
+
+###
+
+POST {{Nimbus.WebApi_HostAddress}}/api/truckentities
+Content-Type: application/json
+
+{
+  //TruckEntity
+}
+
+###
+
+@id=0
+GET {{Nimbus.WebApi_HostAddress}}/api/truckentities/{{id}}
+
+###
+
+GET {{Nimbus.WebApi_HostAddress}}/api/routeentities/{{id}}
+
+###

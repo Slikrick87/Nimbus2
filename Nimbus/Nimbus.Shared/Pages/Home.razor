@@ -1,0 +1,74 @@
+﻿@page "/"
+@using Nimbus.Shared.Services;
+@using Nimbus.Shared.Entities;
+@using Nimbus.Shared.Repositories;
+@inject ITruckRepository TruckRepository;
+@inject IRouteRepository RouteRepository;
+@inject SelectionService SelectionService;
+@inject IFormFactor FormFactor
+
+<PageTitle>Home</PageTitle>
+@if (SelectionService.selectedTruck != null)
+{
+    <h1>Selected Truck: @SelectionService.selectedTruck.id</h1>
+    @* <h1>Selected Route: @route.Id, @route.nickName</h1> *@
+    <div>
+        <h3>Enter Current Mileage: </h3>
+        <h3>@TruckRepository.GetTruckByIdAsync(SelectionService.selectedTruck.id).Result.mileage</h3>
+        <input type="number" @bind="updatedMileage" />
+        <button class="btn btn-primary" @onclick="UpdateMileageAsync">Set Mileage</button>
+    </div>
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="selectRoute">
+            <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Select Truck
+        </NavLink>
+    </div>
+}
+else if (SelectionService.selectedTruck == null)
+{
+    <h1>Select Truck</h1>
+    foreach (TruckEntity truck in TruckRepository.GetAllTrucksAsync().Result)
+    {
+        <div>
+            <input type="checkbox" @onchange="e => OnCheckboxChange(e, truck)" />
+            <label>Truck Id: @truck.id Mileage: @truck.mileage</label>
+        </div>
+    }
+}
+else
+{
+    <h1>Please Select Truck and Route</h1>
+
+
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="selectTruck">
+            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Set Truck
+        </NavLink>
+    </div>
+
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="selectRoute">
+            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Set Route
+        </NavLink>
+    </div>
+}
+@* 
+    //scaffold Api call to database to meet requirement to serve an api repository endpoints
+    //Can move @code to a partial class with same name such as Home.cs
+    //look up blazor validation form
+    //<tbody>simple html table</tbody>
+    //can use @page "/DisplayTruck/{TruckId}" to set the route and use another to same page without {TruckId}
+    //@bind-Value="@truckid" to bind the value to the property will chhange dynamically even in loops and if statements
+    //Input select for dropdowns InputCheckBox for checkboxes
+    //check<EditForm Model="truck" OnValidSubmit="HandleValidSubmit">
+    //add modal for creating and adding addresses to routes
+    //lock buttons after onclick when using ASYNC so you don't have multiple calls
+    //finish tests 
+    //Check Datacontext and update relationships
+    //IAsyncEnumerable for large data sets
+    //CancellationTokenSource
+    //change header footer and layout in layout.cshtml
+    //make new layout page for mao display
+    //[Required(ErrorMessage = "Please enter a name.")])]
+    //Add for calling error list display on creation pages and where according
+ *@

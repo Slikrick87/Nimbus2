@@ -1,0 +1,65 @@
+﻿@using Nimbus.Shared.Repositories;
+@using Nimbus.Shared.Entities;
+@using Nimbus.Shared.Pages;
+@using Nimbus.Shared.Services;
+@inject SelectionService SelectionService;
+@inject ITruckRepository TruckRepository;
+@page "/selections"
+@if (SelectionService.selectedRoute != null)
+{
+
+    <h1>Selected Route:</h1>
+    <form>
+        <h2>ID: @SelectionService.selectedRoute.Id</h2>
+        <h2>Nickname: @SelectionService.selectedRoute.nickName</h2>
+        <h2>Truck ID: @SelectionService.selectedRoute.truckId</h2>
+        <h2>Number of Stops: @(SelectionService.selectedRoute.stops?.Count)</h2>
+    </form>
+}
+else
+{
+    <h2>No route selected</h2>
+}
+@if(SelectionService.selectedTruck != null)
+{
+    <style>
+        .button-container {
+            display: block;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-left: 25px;
+        }
+    </style>
+    <form display="align: center;">
+        
+        <h1>Selected Truck:</h1>
+        <h2>ID: @SelectionService.selectedTruck.id</h2>
+        <h2>Mileage: @SelectionService.selectedTruck.mileage  </h2>
+        <div style ="align-items: center">
+        <div style="display: flex; align-items: center;">
+        <h2>Oil Mileage: @SelectionService.selectedTruck.oilChange  </h2> 
+        <button class="button-container" @onclick="OilChange">Oil Changed</button>
+        </div> <div style="display: flex; align-items: center;">
+        <h2>Front Driver Tire: @SelectionService.selectedTruck.tireFD  </h2>
+            <button class="button-container" @onclick="TireFDChange">Front Driver Tire Changed</button>
+        </div> <div style="display: flex; align-items: center;">
+        <h2>Front Passenger Tire: @SelectionService.selectedTruck.tireFP  </h2>
+            <button class="button-container" @onclick="TireFPChange">Front Passenger Tire Changed</button>
+        </div> <div style="display: flex; align-items: center;">
+        <h2>Rear Driver Tire: @SelectionService.selectedTruck.tireRD  </h2>
+            <button class="button-container" @onclick="TireRDChange">Rear Driver Tire Changed</button>
+        </div> <div style="display: flex; align-items: center;">
+        <h2>Rear Passenger Tire: @SelectionService.selectedTruck.tireRP  </h2>
+            <button class="button-container" @onclick="TireRPChange">Rear Passenger Tire Changed</button>
+        </div>
+        </div>
+        <br />
+    </form>
+    <button class="btn btn-primary" @onclick="ClearSelectionAsync">Reset Selected Truck and Route</button>
+}
+else
+{
+    <h2>No truck selected</h2>
+}
+

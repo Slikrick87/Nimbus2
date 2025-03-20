@@ -1,0 +1,195 @@
+﻿@using Nimbus.Shared.Logic
+@using Nimbus.Shared.Services;
+@using Nimbus.Shared.Entities;
+@using Nimbus.Shared.Repositories;
+@using Nimbus.Shared.PagesCodeBehind;
+@using Microsoft.Maui.Devices.Sensors;
+@using System.Linq;
+@using System.Text.Json;
+
+@page "/map"
+
+
+@inject IRouteRepository RouteRepository;
+@inject IAddressRepository AddressRepository;
+@inject IGeoLocationService GeoLocationService;
+@inject SelectionService SelectionService;
+@inject IJSRuntime JS
+
+
+<h3>Map</h3>
+<div id="map" style="height:500px;width:100%;"></div>
+<script>
+
+    let map;
+
+    async function geocodeAddress(address) {
+    console.log("Geocoding address:", address);
+    return new Promise((resolve, reject) => {
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ address: address }, (results, status) => {
+    if (status === 'OK') {
+    const location = {
+    lat: results[0].geometry.location.lat(),
+    lng: results[0].geometry.location.lng()
+    };
+    console.log("Geocoded location:", location);
+    resolve(JSON.stringify(location));
+    } else {
+    reject(status);
+    }
+    });
+    });
+    }
+
+    async function initMap(locationsJson) {
+    map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: 37.250626, lng: -83.195503 },
+    zoom: 7,
+    });
+    const DemoMarker = new google.maps.Marker({
+    position: { lat: 37.250626, lng: -83.195503 },
+    map: map,
+    title: "Demo Marker",
+    });
+    const locations = JSON.parse(locationsJson);
+    locations.forEach(location => {
+    console.log("Adding marker at:", location.lat, location.lng);
+    new google.maps.Marker({
+    position:  { lat: location.lat, lng: location.lng },
+    zIndex: location.index, 
+    map: map
+    //label: way to differiantate stops preferably by numbers
+    });
+    })
+    }
+
+
+
+
+
+</script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=@Keys.mapsKey"></script>
+<div id="orderedStops">
+    @if (SelectionService.selectedRoute != null && SelectionService.selectedRoute.stops != null && SelectionService.orderedStopsForRoute != null)
+    {
+        <ol>
+            @foreach (Address stop in SelectionService.orderedStopsForRoute)
+            {
+                int index = 0;
+                <li>
+                    @stop.streetNumber @stop.streetName, @stop.city, @stop.state @stop.zipCode
+                    <button @onclick="() => MoveUp(index)">Up</button>
+                    <button @onclick="() => MoveDown(index)">Down</button>
+                </li>
+                index++;
+            }
+        </ol>
+    }
+</div>
+@code {
+
+    //need to call an addmarker method to add markers to the map
+    
+    public class GeoCodeResult
+    {
+        public double lat { get; set; }
+        public double lng { get; set; }
+
+    }
+    List<GeoCodeResult> locationsGeoCode = new List<GeoCodeResult>();
+    List<String> locationsJson = new List<String>();
+    // //List<LocationObject> enrichedLocationsJson = new List<LocationObject>();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        try
+        {
+            await GetAddressesAndGeocode();
+            var serializedLocations = JsonSerializer.Serialize(locationsGeoCode);
+            await JS.InvokeVoidAsync("initMap", serializedLocations);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error initializing map: {ex.Message}");
+        }
+    }
+
+    public async Task GetAddressesAndGeocode()
+    {
+        if (SelectionService.selectedRoute != null)
+        {
+            var addresses = await AddressRepository.GetAddressesByRoute(SelectionService.selectedRoute.Id);
+            var addressStrings = addresses.Select(a => $"{a.streetNumber} {a.streetName}, {a.city}, {a.state} {a.zipCode}").ToList();
+
+
+            foreach (var address in addressStrings)
+            {
+
+                var json = await JS.InvokeAsync<string>("geocodeAddress", address);
+                var location = JsonSerializer.Deserialize<GeoCodeResult>(json);
+
+
+                locationsGeoCode.Add(location);
+            }
+            Console.WriteLine("Locations List:", JsonSerializer.Serialize(locationsJson));
+        }
+    }
+    private async Task MoveUp(int key)
+    {
+        try
+        {
+            var stops = SelectionService.selectedRoute.stops.ToList();
+            var temp = stops[key];
+            stops[key] = stops[key - 1];
+            stops[key - 1] = temp;
+            SelectionService.ReorderStopsForRoute(stops);
+            StateHasChanged();
+            await UpdateMap();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error moving stop up: {ex.Message}");
+        }
+    }
+    private async Task MoveDown(int key)
+    {
+        try
+        {
+            var stops = SelectionService.orderedStopsForRoute.ToList();
+            var temp = stops[key];
+            stops[key] = stops[key + 1];
+            stops[key + 1] = temp;
+            SelectionService.ReorderStopsForRoute(stops);
+            StateHasChanged();
+            await UpdateMap();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error moving stop up: {ex.Message}");
+        }
+    }
+    private async Task UpdateMap()
+    {
+        await GetAddressesAndGeocode();
+        var serializedLocations = JsonSerializer.Serialize(locationsGeoCode);
+        await JS.InvokeVoidAsync("initMap", serializedLocations);
+    }
+
+    public async Task GetLocationFromDeviceAsync()
+    {
+        Location currentLocation = await GeoLocationService.GetLocationAsync();
+    }
+    public async Task<string> GetLatLong()
+    {
+        try
+        {
+            return AddressRepository.ConvertToJSAddressByRoute(SelectionService.selectedRoute.Id).AsyncState.ToString();
+        }
+        catch (Exception ex)
+        {
+            return "lat: 37.7749, lng: -122.4194";
+        }
+    }
+
+}

@@ -1,0 +1,21 @@
+﻿@using Nimbus.Shared.Services;
+@using Nimbus.Shared.Entities;
+@inject IRouteRepository RouteRepository;
+@inject IFormFactor FormFactor;
+@page "/addRoute"
+
+<PageTitle>Add Route</PageTitle>
+
+<h3>AddRoute</h3>
+
+<div class="d-flex">
+    <form method="post">
+        <div>
+            <label for ="nickName">Name for Route:</label>
+            <input type="text" name="nickName" @bind="nickName" />
+        </div>
+    </form>
+</div>
+
+<button color="Primary Color" class="btn btn-primary" @onclick="AddNewRoute">Confirm</button>
+

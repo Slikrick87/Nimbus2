@@ -1,0 +1,143 @@
+﻿@using Nimbus.Shared.Services;
+@using Nimbus.Shared.Entities;
+@using Nimbus.Shared.Repositories;
+@inject SelectionService SelectionService;
+@inject IRouteRepository RouteRepository;
+@inject IAddressRepository AddressRepository;
+@inject ITruckRepository TruckRepository;
+@page "/manifest"
+
+<h3>View Route</h3>
+@if(SelectionService.selectedRoute != null && SelectionService.selectedRoute.stops != null )
+{
+    <ol>
+        @foreach (Address stop in allStops)
+        {
+            <li>
+                @stop.streetNumber @stop.streetName, @stop.city, @stop.state @stop.zipCode 
+                <button class="btn btn-primary" @onclick="() => EditAddress(stop.id)">Edit</button>
+                <button class="alert-danger" @onclick="() => DeleteAddress(stop.id)">Delete</button>
+            </li>
+        }
+    </ol>
+    @if (editAddress)
+    {
+        @* <input type="number" @bind="stop.streetNumber" placeholder="stop.streetNumber"/>
+                <input type="string" @bind="stop.streetName" placeholder="stop.streetName" /> *@
+
+        <div class="modal show d-block" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Address</h5>
+                        <button type="button" class="close" @onclick="CloseEditModal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <EditForm Model="@address">
+                            <div class="form-group">
+                                <label for="streetNumber">Street Number</label>
+                                <InputNumber id="streetNumber" class="form-control" @bind-Value="address.streetNumber" />
+                            </div>
+                            <div class="form-group">
+                                <label for="streetName">Street Name</label>
+                                <InputText id="streetName" class="form-control" @bind-Value="address.streetName" />
+                            </div>
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <InputText id="city" class="form-control" @bind-Value="address.city" />
+                            </div>
+                            <div class="form-group">
+                                <label for="state">State</label>
+                                <InputText id="state" class="form-control" @bind-Value="address.state" />
+                            </div>
+                            <div class="form-group">
+                                <label for="zipCode">Zip Code</label>
+                                <InputNumber id="zipCode" class="form-control" @bind-Value="address.zipCode" />
+                            </div>
+                        </EditForm>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @onclick="CloseEditModal">Close</button>
+                        <button type="button" class="btn btn-primary" @onclick="SaveAddressAsync">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @if(deleteAddress == true)
+    {
+        <div class="modal show d-block" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Delete Address</h5>
+                        <button type="button" class="close" @onclick="CloseDeleteModal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete address?
+                            <em>THIS CANNOT BE UNDONE</em>
+                        </p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="CloseDeleteModal">Close</button>
+                    <button type="button" class="btn btn-primary" @onclick="DeleteAddressFinal">Delete Address</button>
+                </div>
+            </div>
+        </div>
+    }
+}
+else if (SelectionService.selectedRoute != null && SelectionService.selectedRoute.stops == null)
+{
+    <h1> No Stops On Current Route </h1>
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="addStop">
+            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Add Stops To Current Route
+        </NavLink>
+
+    </div>
+}
+else
+{
+    <h4>Go back to home page and select Truck and Route</h4>
+    <NavLink class="nav-link" href="/">
+        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Go To Home
+    </NavLink>
+}
+
+@code
+{
+    // public bool editAddress = false;
+    // public bool deleteAddress = false;
+    // Address? address;
+    // public async Task EditAddress(int id)
+    // {
+    //     editAddress = true;
+    //     address = await AddressRepository.FindAddressForRouteByIdAsync(SelectionService.selectedRoute.Id, id);
+
+    // }
+    // public async Task SaveAddressAsync()
+    // {
+    //     await AddressRepository.UpdateAddressAsync(address);
+    //     editAddress = false;
+    // }
+    // public async Task DeleteAddress(int id)
+    // {
+    //     deleteAddress = true;
+    //     address = await AddressRepository.FindAddressForRouteByIdAsync(SelectionService.selectedRoute.Id, id);
+    //     await DeleteAddressFinal();
+    // }
+
+    // private void CloseEditModal()
+    // {
+    //     editAddress = false;
+    // }
+    // private void CloseDeleteModal()
+    // {
+    //     deleteAddress = false;
+    // }
+}

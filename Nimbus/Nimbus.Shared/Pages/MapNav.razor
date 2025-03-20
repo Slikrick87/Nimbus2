@@ -1,0 +1,15 @@
+﻿@* @using CommunityToolkit.Mvvm;
+@page "/mapNav"
+
+<h3>MapNav</h3>
+
+@code {
+    // Create a message
+    public class LoggedInUserChangedMessage : ValueChangedMessage<string>
+    {
+        public LoggedInUserChangedMessage(string user) : base(user)
+        {
+        }
+    }
+ *@
+}

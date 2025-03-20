@@ -1,0 +1,31 @@
+﻿@using Nimbus.Shared.Services;
+@using Nimbus.Shared.Entities;
+@using Nimbus.Shared.Repositories;
+@inject IRouteRepository RouteRepository;
+@inject ITruckRepository TruckRepository;
+@inject SelectionService SelectionService;
+@page "/selectRoute"
+
+<h3>Select Route</h3>
+<form method="post">
+    <ul>
+        @foreach (RouteEntity route in routes)
+        {
+            <li>ID: @route.Id Area: @route.nickName</li>
+            <button color="Primary Color" class="btn btn-primary" @onclick="() => ChooseRoute(route.Id)">Select</button>
+        }
+    </ul>
+</form>
+@if(SelectionService.selectedRoute != null && SelectionService.selectedRoute != null)
+{
+    <h3>Selected Truck: @SelectionService.selectedTruck.id</h3>
+    <h3>Selected Route: @SelectionService.selectedRoute.Id</h3>
+    <button color="Primary Color" class="btn btn-primary" @onclick="LinkTruckAndRouteAsync" disabled ="@isLoading">Set Truck To Route</button>
+}
+<div class="nav-item px-3">
+    <NavLink class="nav-link" href="addStop">
+        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Add New Stops
+    </NavLink>
+</div>
+@* <h3>Current Route: @route.Id Name: @route.nickName</h3>
+ *@

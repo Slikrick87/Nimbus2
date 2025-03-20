@@ -1,0 +1,24 @@
+﻿@using Nimbus.Shared.Services;
+@using Nimbus.Shared.Entities;
+@inject ITruckRepository TruckRepository;
+@page "/addTruck"
+
+<PageTitle>AddTruck</PageTitle>
+
+<h3>Add Truck</h3>
+
+<div class="d-flex">
+    <form method="post">
+        <div>
+            <label for="mileage">Mileage:</label>
+            <input type="number" name="mileage" @bind="mileage" />
+            <br/>
+            @* <label for="nickName">Nickname:</label>
+            <input type="text" name="nickName" @bind="nickName" />
+            <br /> *@
+        </div>
+    </form>
+</div>
+
+<button color="Primary Color" class="btn btn-primary" @onclick="AddNewTruck">Confirm</button>
+
