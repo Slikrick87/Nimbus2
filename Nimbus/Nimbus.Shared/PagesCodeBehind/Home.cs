@@ -2,11 +2,16 @@
 using Nimbus.Shared.Entities;
 using Nimbus.Shared.Logic;
 using Nimbus.Shared.Repositories;
+using Nimbus.Shared.Services;
 
 namespace Nimbus.Shared.Pages
 {
-    public partial class Home
+    public partial class Home : ComponentBase
     {
+        //[Inject]
+        //public SelectionService SelectionService { get; set; }
+        //[Inject]
+        //public ITruckRepository TruckRepository { get; set; }
         public int updatedMileage;
         //private string factor => FormFactor.GetFormFactor();
         //private string platform => FormFactor.GetPlatform();
@@ -38,7 +43,10 @@ namespace Nimbus.Shared.Pages
         }
         public async Task UpdateMileageAsync()
         {
-            Task taskOne = Task.Run(() => TruckRepository.AdjustMileageAsync(SelectionService.selectedTruck.id, updatedMileage));
+            if (SelectionService.selectedTruck != null)
+            {
+                await TruckRepository.AdjustMileageAsync(SelectionService.selectedTruck.id, updatedMileage);
+            }
         }
     }
 }

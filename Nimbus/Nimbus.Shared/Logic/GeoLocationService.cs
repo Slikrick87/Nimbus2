@@ -27,7 +27,7 @@ namespace Nimbus.Shared.Logic
             }
             catch (Exception ex)
             {
-                // Unable to get location
+                
                 return null;
             }
         }

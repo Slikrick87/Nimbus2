@@ -1,4 +1,5 @@
-﻿using Nimbus.Shared.Entities;
+﻿using Microsoft.AspNetCore.Components;
+using Nimbus.Shared.Entities;
 using Nimbus.Shared.Repositories;
 using Nimbus.Shared.Services;
 using System;
@@ -11,6 +12,12 @@ namespace Nimbus.Shared.Pages
 {
     public partial class AddStop
     {
+        //[Inject]
+        //public SelectionService SelectionService { get; set; }
+        //[Inject]
+        //public IAddressRepository AddressRepository { get; set; }
+        //[Inject]
+        //public IRouteRepository RouteRepository { get; set; }
         public int stopsAdded = 0;
         public Address? newAddress;
         public int streetNumber;
@@ -22,14 +29,12 @@ namespace Nimbus.Shared.Pages
         {
             try
             {
-                await Task.Run(() => newAddress = AddressRepository.CreateNewAddressWithRouteAsync(streetNumber, streetName, city, state, zipCode, SelectionService.selectedRoute).Result);
-                Task taskTwo = Task.Run(() => RouteRepository.AddStopAsync(SelectionService.selectedRoute, newAddress));
-                Task taskThree = Task.Run(() => SelectionService.orderedStopsForRoute.Add(newAddress));
+                newAddress = await AddressRepository.CreateNewAddressWithRouteAsync(streetNumber, streetName, city, state, zipCode, SelectionService.selectedRoute);
+                await RouteRepository.AddStopAsync(SelectionService.selectedRoute, newAddress);
+                SelectionService.orderedStopsForRoute.Add(newAddress);
                 stopsAdded++;
             }
             catch { Console.WriteLine("Error in adding new address"); }
-
         }
-
     }
 }

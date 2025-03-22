@@ -9,6 +9,7 @@ using Nimbus.Web.Services;
 using Microsoft.Extensions.Configuration;
 using Nimbus.Shared;
 using Nimbus.Shared.Controllers;
+using Microsoft.AspNetCore.StaticFiles; 
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,13 +40,12 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 
-app.MapStaticAssets();
+app.UseStaticFiles(); 
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()

@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nimbus", "Nimbus\Nimbus\Nimbus.csproj", "{1AF0AC28-E510-440E-9240-60541BB78DA2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7708D5AC-792B-42E7-97B8-EA9532DB779B} = {7708D5AC-792B-42E7-97B8-EA9532DB779B}
+		{7E367F0B-872E-458B-95F2-C267923EEFEF} = {7E367F0B-872E-458B-95F2-C267923EEFEF}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nimbus.Shared", "Nimbus\Nimbus.Shared\Nimbus.Shared.csproj", "{1524F455-D310-400C-8544-14B65FFDB38B}"
 EndProject

@@ -10,7 +10,7 @@ using Nimbus.Shared.Services;
 
 namespace Nimbus.Shared.Components
 {
-    public partial class AddAddressToRouteDialog
+    public partial class AddAddressToRouteDialog : ComponentBase
     {
         public Address Address { get; set; } =
             new Address(1, "Two", "Three", "Ky", 12345);

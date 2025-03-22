@@ -2,8 +2,8 @@
 @using Nimbus.Shared.Entities;
 @using Nimbus.Shared.Pages;
 @using Nimbus.Shared.Services;
-@inject SelectionService SelectionService;
-@inject ITruckRepository TruckRepository;
+@inject SelectionService SelectionService
+@inject ITruckRepository TruckRepository
 @page "/selections"
 @if (SelectionService.selectedRoute != null)
 {

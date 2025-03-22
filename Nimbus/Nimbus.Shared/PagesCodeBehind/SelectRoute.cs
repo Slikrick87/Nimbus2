@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Nimbus.Shared.Pages
 {
-    partial class SelectRoute
+    partial class SelectRoute : ComponentBase
     {
         bool isLoading = false;
         public RouteEntity? route;

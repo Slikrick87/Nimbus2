@@ -1,4 +1,6 @@
 ﻿@using Nimbus.Shared.Entities
+@using Microsoft.AspNetCore.Components
+
 @if (ShowDialog)
 {
     <div class="modal fade show d-block" id="AddressModal" tabindex="-1" role="dialog">
@@ -19,31 +21,31 @@
 
                     <div class="form-group">
                         <label for="streetNumber">Street Number: </label>
-                        <InputNumber id="streetNumber" class="form-control" @bind-Value="@Address.streetNumber" />
+                        <InputNumber id="streetNumber" class="form-control" @bind="@Address.streetNumber" />
                         <ValidationMessage For="@(() => Address.streetNumber)" />
                     </div>
 
                     <div class="form-group">
                         <label for="streetName">Street Name: </label>
-                        <InputText id="streetName" class="form-control" @bind-Value="@Address.streetName" />
+                        <InputText id="streetName" class="form-control" @bind="@Address.streetName" />
                         <ValidationMessage For="@(() => Address.streetName)" />
                     </div>
 
                     <div class="form-group">
                         <label for="city">City: </label>
-                        <InputText id="city" class="form-control" @bind-Value="@Address.city" />
+                        <InputText id="city" class="form-control" @bind="@Address.city" />
                         <ValidationMessage For="@(() => Address.city)" />
                     </div>
 
                     <div class="form-group">
                         <label for="state">State: </label>
-                        <InputText id="state" class="form-control" @bind-Value="@Address.state" />
+                        <InputText id="state" class="form-control" @bind="@Address.state" />
                         <ValidationMessage For="@(() => Address.state)" />
                     </div>
 
                     <div class="form-group">
                         <label for="zipCode">Zip: </label>
-                        <InputNumber id="zip" class="form-control" @bind-Value="@Address.zipCode" />
+                        <InputNumber id="zip" class="form-control" @bind="@Address.zipCode" />
                         <ValidationMessage For="@(() => Address.zipCode)" />
                     </div>
                         <button type="submit" class="btn btn-primary">Save Address</button>
