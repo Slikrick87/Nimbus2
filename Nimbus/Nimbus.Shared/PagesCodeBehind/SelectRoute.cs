@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+//using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Nimbus.Shared.Entities;
 using Nimbus.Shared.Logic;
 using Nimbus.Shared.Repositories;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Nimbus.Shared.Pages
 {
-    partial class SelectRoute : ComponentBase
+    partial class SelectRoute
     {
         bool isLoading = false;
         public RouteEntity? route;

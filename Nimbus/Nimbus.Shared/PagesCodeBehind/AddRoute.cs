@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Nimbus.Shared.Pages
 {
-    public partial class AddRoute : ComponentBase
+    public partial class AddRoute
     {
         public string nickName;
         public RouteEntity route;

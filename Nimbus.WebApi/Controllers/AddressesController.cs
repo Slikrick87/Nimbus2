@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+//using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nimbus.Shared;
 using Nimbus.Shared.Entities;
 
 namespace Nimbus.WebApi.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AddressesController : ControllerBase
+    [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
+    [Microsoft.AspNetCore.Mvc.ApiController]
+    public class AddressesController : Microsoft.AspNetCore.Mvc.ControllerBase
     {
         private readonly DataContext _context;
 
@@ -22,15 +22,15 @@ namespace Nimbus.WebApi.Controllers
         }
 
         // GET: api/Addresses
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Address>>> GetAddresses()
+        [Microsoft.AspNetCore.Mvc.HttpGet]
+        public async Task<Microsoft.AspNetCore.Mvc.ActionResult<IEnumerable<Address>>> GetAddresses()
         {
             return await _context.Addresses.ToListAsync();
         }
 
         // GET: api/Addresses/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Address>> GetAddress(int id)
+        [Microsoft.AspNetCore.Mvc.HttpGet("{id}")]
+        public async Task<Microsoft.AspNetCore.Mvc.ActionResult<Address>> GetAddress(int id)
         {
             var address = await _context.Addresses.FindAsync(id);
 
@@ -44,8 +44,8 @@ namespace Nimbus.WebApi.Controllers
 
         // PUT: api/Addresses/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAddress(int id, Address address)
+        [Microsoft.AspNetCore.Mvc.HttpPut("{id}")]
+        public async Task<Microsoft.AspNetCore.Mvc.IActionResult> PutAddress(int id, Address address)
         {
             if (id != address.id)
             {
@@ -75,8 +75,8 @@ namespace Nimbus.WebApi.Controllers
 
         // POST: api/Addresses
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Address>> PostAddress(Address address)
+        [Microsoft.AspNetCore.Mvc.HttpPost]
+        public async Task<Microsoft.AspNetCore.Mvc.ActionResult<Address>> PostAddress(Address address)
         {
             _context.Addresses.Add(address);
             await _context.SaveChangesAsync();
@@ -85,8 +85,8 @@ namespace Nimbus.WebApi.Controllers
         }
 
         // DELETE: api/Addresses/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAddress(int id)
+        [Microsoft.AspNetCore.Mvc.HttpDelete("{id}")]
+        public async Task<Microsoft.AspNetCore.Mvc.IActionResult> DeleteAddress(int id)
         {
             var address = await _context.Addresses.FindAsync(id);
             if (address == null)

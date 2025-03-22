@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+//using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nimbus.Shared;
 using Nimbus.Shared.Entities;
 
 namespace Nimbus.WebApi.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class TruckEntitiesController : ControllerBase
+    [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
+    [Microsoft.AspNetCore.Mvc.ApiController]
+    public class TruckEntitiesController : Microsoft.AspNetCore.Mvc.ControllerBase
     {
         private readonly DataContext _context;
 
@@ -22,15 +22,15 @@ namespace Nimbus.WebApi.Controllers
         }
 
         // GET: api/TruckEntities
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<TruckEntity>>> GetTrucks()
+        [Microsoft.AspNetCore.Mvc.HttpGet]
+        public async Task<Microsoft.AspNetCore.Mvc.ActionResult<IEnumerable<TruckEntity>>> GetTrucks()
         {
             return await _context.Trucks.ToListAsync();
         }
 
         // GET: api/TruckEntities/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<TruckEntity>> GetTruckEntity(int id)
+        [Microsoft.AspNetCore.Mvc.HttpGet("{id}")]
+        public async Task<Microsoft.AspNetCore.Mvc.ActionResult<TruckEntity>> GetTruckEntity(int id)
         {
             var truckEntity = await _context.Trucks.FindAsync(id);
 
@@ -44,8 +44,8 @@ namespace Nimbus.WebApi.Controllers
 
         // PUT: api/TruckEntities/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutTruckEntity(int id, TruckEntity truckEntity)
+        [Microsoft.AspNetCore.Mvc.HttpPut("{id}")]
+        public async Task<Microsoft.AspNetCore.Mvc.IActionResult> PutTruckEntity(int id, TruckEntity truckEntity)
         {
             if (id != truckEntity.id)
             {
@@ -75,8 +75,8 @@ namespace Nimbus.WebApi.Controllers
 
         // POST: api/TruckEntities
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<TruckEntity>> PostTruckEntity(TruckEntity truckEntity)
+        [Microsoft.AspNetCore.Mvc.HttpPost]
+        public async Task<Microsoft.AspNetCore.Mvc.ActionResult<TruckEntity>> PostTruckEntity(TruckEntity truckEntity)
         {
             _context.Trucks.Add(truckEntity);
             await _context.SaveChangesAsync();
@@ -85,8 +85,8 @@ namespace Nimbus.WebApi.Controllers
         }
 
         // DELETE: api/TruckEntities/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTruckEntity(int id)
+        [Microsoft.AspNetCore.Mvc.HttpDelete("{id}")]
+        public async Task<Microsoft.AspNetCore.Mvc.IActionResult> DeleteTruckEntity(int id)
         {
             var truckEntity = await _context.Trucks.FindAsync(id);
             if (truckEntity == null)

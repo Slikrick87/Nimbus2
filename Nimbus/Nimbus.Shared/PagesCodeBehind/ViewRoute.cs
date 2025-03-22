@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace Nimbus.Shared.Pages
 {
    
-partial class ViewRoute : ComponentBase
+partial class ViewRoute
     {
         //[Inject]
         //public SelectionService SelectionService { get; set; }

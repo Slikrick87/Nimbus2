@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nimbus.Web", "Nimbus\Nimbus
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nimbus.Web.Client", "Nimbus\Nimbus.Web.Client\Nimbus.Web.Client.csproj", "{7708D5AC-792B-42E7-97B8-EA9532DB779B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nimbus.WebApi", "Nimbus.WebApi\Nimbus.WebApi.csproj", "{C5D1722F-716D-477C-9B22-A1C6A0A903D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nimbus.WebApi", "Nimbus.WebApi\Nimbus.WebApi.csproj", "{C4515B37-2E23-ACC1-853B-1A2FCABAC46B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +39,10 @@ Global
 		{7708D5AC-792B-42E7-97B8-EA9532DB779B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7708D5AC-792B-42E7-97B8-EA9532DB779B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7708D5AC-792B-42E7-97B8-EA9532DB779B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C5D1722F-716D-477C-9B22-A1C6A0A903D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C5D1722F-716D-477C-9B22-A1C6A0A903D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C5D1722F-716D-477C-9B22-A1C6A0A903D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C5D1722F-716D-477C-9B22-A1C6A0A903D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4515B37-2E23-ACC1-853B-1A2FCABAC46B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4515B37-2E23-ACC1-853B-1A2FCABAC46B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4515B37-2E23-ACC1-853B-1A2FCABAC46B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4515B37-2E23-ACC1-853B-1A2FCABAC46B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+//using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nimbus.Shared;
 using Nimbus.Shared.Entities;
@@ -11,9 +11,9 @@ using Nimbus.Shared.DTOs;
 
 namespace Nimbus.WebApi.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class RouteEntitiesController : ControllerBase
+    [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
+    [Microsoft.AspNetCore.Mvc.ApiController]
+    public class RouteEntitiesController : Microsoft.AspNetCore.Mvc.ControllerBase
     {
         private readonly DataContext _context;
 
@@ -24,8 +24,8 @@ namespace Nimbus.WebApi.Controllers
 
         // GET: api/RouteEntities
         //This one works!!!
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<RouteEntityDTO>>> GetRoutes()
+        [Microsoft.AspNetCore.Mvc.HttpGet]
+        public async Task<Microsoft.AspNetCore.Mvc.ActionResult<IEnumerable<RouteEntityDTO>>> GetRoutes()
         {
             var routeEntities = await _context.Routes
                 .Include(r => r.stops)
@@ -59,8 +59,8 @@ namespace Nimbus.WebApi.Controllers
 
         // GET: api/RouteEntities/5
         //works!
-        [HttpGet("{id}")]
-        public async Task<ActionResult<RouteEntityDTO>> GetRouteEntity(int id)
+        [Microsoft.AspNetCore.Mvc.HttpGet("{id}")]
+        public async Task<Microsoft.AspNetCore.Mvc.ActionResult<RouteEntityDTO>> GetRouteEntity(int id)
         {
             var routeEntity = await _context.Routes
                 .Include(r => r.stops)
@@ -99,8 +99,8 @@ namespace Nimbus.WebApi.Controllers
 
         // PUT: api/RouteEntities/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutRouteEntity(int id, RouteEntity routeEntity)
+        [Microsoft.AspNetCore.Mvc.HttpPut("{id}")]
+        public async Task<Microsoft.AspNetCore.Mvc.IActionResult> PutRouteEntity(int id, RouteEntity routeEntity)
         {
             if (id != routeEntity.Id)
             {
@@ -130,8 +130,8 @@ namespace Nimbus.WebApi.Controllers
 
         // POST: api/RouteEntities
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<RouteEntity>> PostRouteEntity(RouteEntity routeEntity)
+        [Microsoft.AspNetCore.Mvc.HttpPost]
+        public async Task<Microsoft.AspNetCore.Mvc.ActionResult<RouteEntity>> PostRouteEntity(RouteEntity routeEntity)
         {
             _context.Routes.Add(routeEntity);
             await _context.SaveChangesAsync();
@@ -140,8 +140,8 @@ namespace Nimbus.WebApi.Controllers
         }
 
         // DELETE: api/RouteEntities/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRouteEntity(int id)
+        [Microsoft.AspNetCore.Mvc.HttpDelete("{id}")]
+        public async Task<Microsoft.AspNetCore.Mvc.IActionResult> DeleteRouteEntity(int id)
         {
             var routeEntity = await _context.Routes
                 .Include(r => r.stops)

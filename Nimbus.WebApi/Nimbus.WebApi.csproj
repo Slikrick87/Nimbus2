@@ -15,6 +15,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
     <!--<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="8.0.0" />-->
 	  <PackageReference Include="Microsoft.AspNetCore.OData" Version="8.0.8" />
+	  <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.3.0" />
 
   </ItemGroup>
 
@@ -22,4 +23,6 @@
     <ProjectReference Include="..\Nimbus\Nimbus.Shared\Nimbus.Shared.csproj" />
   </ItemGroup>
 
+	
+	<!--BullCrap-->
 </Project>

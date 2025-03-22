@@ -6,7 +6,7 @@ using Nimbus.Shared.Services;
 
 namespace Nimbus.Shared.Pages
 {
-    public partial class Home : ComponentBase
+    public partial class Home
     {
         //[Inject]
         //public SelectionService SelectionService { get; set; }
