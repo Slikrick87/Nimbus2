@@ -11,8 +11,8 @@
     <ProjectReference Include="..\Nimbus.Web.Client\Nimbus.Web.Client.csproj" />
     <PackageReference Include="FluentAssertions" Version="8.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.3" />
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.3" />
-    <PackageReference Include="Microsoft.Maui.Essentials" Version="9.0.50" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.3" />
+    <PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.50" />
 	<!--<PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.3.0" />-->
 
   </ItemGroup>
