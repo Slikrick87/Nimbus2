@@ -38,12 +38,12 @@ public static class MauiProgram
             //builder.Services.AddControllers();
 
 
-            //if there's a database error it originates here lol
-            //using (var scope = builder.Build().Services.CreateScope())
-            //{
-            //    var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
-            //    dbContext.Database.Migrate();
-            //}
+            using (var scope = builder.Build().Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+                dbContext.Database.EnsureCreated();
+                dbContext.Database.Migrate();
+            }
 
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();

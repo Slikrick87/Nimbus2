@@ -8,13 +8,9 @@ namespace Nimbus.Shared.Pages
 {
     public partial class Home
     {
-        //[Inject]
-        //public SelectionService SelectionService { get; set; }
-        //[Inject]
-        //public ITruckRepository TruckRepository { get; set; }
         public int updatedMileage;
-        //private string factor => FormFactor.GetFormFactor();
-        //private string platform => FormFactor.GetPlatform();
+        private int currentMileage;
+        private bool isUpdateButtonDisabled = true;
         public RouteEntity route;
         public TruckEntity truck;
         public void OnCheckboxChange(ChangeEventArgs e, TruckEntity truck)
@@ -34,16 +30,37 @@ namespace Nimbus.Shared.Pages
             {
                 Task taskOne = Task.Run(() => truck = SelectionService.selectedTruck);
                 Task taskTwo = Task.Run(() => route = SelectionService.selectedRoute);
-                return Task.WhenAll(taskOne, taskTwo);
+                Task taskThree = Task.Run(() => currentMileage = truck.mileage);
+                return Task.WhenAll(taskOne, taskTwo, taskThree);
             }
             catch
             {
                 return Task.CompletedTask;
             }
         }
+        //private void ValidateMileage(ChangeEventArgs e)
+        //{
+        //    if (int.TryParse(e.Value.ToString(), out int newMileage))
+        //    {
+        //        updatedMileage = newMileage;
+        //        isUpdateButtonDisabled = updatedMileage < currentMileage;
+        //    }
+        //}
+        private void ValidateMileage(ChangeEventArgs e)
+        {
+            if (int.TryParse(e.Value.ToString(), out int newMileage))
+            {
+                updatedMileage = newMileage;
+                isUpdateButtonDisabled = newMileage > currentMileage;
+            }
+            else
+            {
+                isUpdateButtonDisabled = true;
+            }
+        }
         public async Task UpdateMileageAsync()
         {
-            if (SelectionService.selectedTruck != null)
+            if (SelectionService.selectedTruck != null && updatedMileage>= currentMileage)
             {
                 await TruckRepository.AdjustMileageAsync(SelectionService.selectedTruck.id, updatedMileage);
             }

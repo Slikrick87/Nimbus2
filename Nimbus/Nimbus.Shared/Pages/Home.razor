@@ -14,9 +14,9 @@
     @* <h1>Selected Route: @route.Id, @route.nickName</h1> *@
     <div>
         <h3>Enter Current Mileage: </h3>
-        <h3>@TruckRepository.GetTruckByIdAsync(SelectionService.selectedTruck.id).Result.mileage</h3>
-        <input type="number" @bind="updatedMileage" />
-        <button class="btn btn-primary" @onclick="UpdateMileageAsync">Set Mileage</button>
+        <h3>@currentMileage</h3>
+        <input type="number" @bind="updatedMileage" Min="@currentMileage" @oninput="ValidateMileage"/>
+        <button class="btn btn-primary" @onclick="UpdateMileageAsync" disabled="@isUpdateButtonDisabled">Set Mileage</button>
     </div>
     <div class="nav-item px-3">
         <NavLink class="nav-link" href="selectRoute">
@@ -52,6 +52,7 @@ else
         </NavLink>
     </div>
 }
+
 @* 
     //scaffold Api call to database to meet requirement to serve an api repository endpoints
     //Can move @code to a partial class with same name such as Home.cs
@@ -69,6 +70,6 @@ else
     //CancellationTokenSource
     //change header footer and layout in layout.cshtml
     //make new layout page for mao display
-    //[Required(ErrorMessage = "Please enter a name.")])]
+    //[Required(ErrorMessage = "Please enter a name.")])])
     //Add for calling error list display on creation pages and where according
  *@

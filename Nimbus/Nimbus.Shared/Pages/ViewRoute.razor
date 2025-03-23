@@ -82,8 +82,7 @@
                             <em>THIS CANNOT BE UNDONE</em>
                         </p>
                     </div>
-                </div>
-                <div class="modal-footer">
+                
                     <button type="button" class="btn btn-secondary" @onclick="CloseDeleteModal">Close</button>
                     <button type="button" class="btn btn-primary" @onclick="DeleteAddressFinal">Delete Address</button>
                 </div>
@@ -109,35 +108,4 @@ else
     </NavLink>
 }
 
-@code
-{
-    // public bool editAddress = false;
-    // public bool deleteAddress = false;
-    // Address? address;
-    // public async Task EditAddress(int id)
-    // {
-    //     editAddress = true;
-    //     address = await AddressRepository.FindAddressForRouteByIdAsync(SelectionService.selectedRoute.Id, id);
 
-    // }
-    // public async Task SaveAddressAsync()
-    // {
-    //     await AddressRepository.UpdateAddressAsync(address);
-    //     editAddress = false;
-    // }
-    // public async Task DeleteAddress(int id)
-    // {
-    //     deleteAddress = true;
-    //     address = await AddressRepository.FindAddressForRouteByIdAsync(SelectionService.selectedRoute.Id, id);
-    //     await DeleteAddressFinal();
-    // }
-
-    // private void CloseEditModal()
-    // {
-    //     editAddress = false;
-    // }
-    // private void CloseDeleteModal()
-    // {
-    //     deleteAddress = false;
-    // }
-}

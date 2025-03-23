@@ -49,7 +49,7 @@ namespace Nimbus.Shared.Repositories
         }
         public async Task ConvertToJSAddressByRoute(int routeId)
         {
-            List<Address> addresses = GetAddressesByRoute(routeId).Result;
+            List<Address> addresses = await Task.Run(() => GetAddressesByRoute(routeId).Result);
             string jsAddress;
             int counter = 0;
             foreach (var item in addresses)

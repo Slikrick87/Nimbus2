@@ -15,15 +15,6 @@ namespace Nimbus.Shared.Pages
    
 partial class ViewRoute
     {
-        //[Inject]
-        //public SelectionService SelectionService { get; set; }
-
-        //[Inject]
-        //public IRouteRepository RouteRepository { get; set; }
-
-        //[Inject]
-        //public IAddressRepository AddressRepository { get; set; }
-
         public int routeId;
         public bool editAddress = false;
         public bool deleteAddress = false;
@@ -40,11 +31,10 @@ partial class ViewRoute
 
         public async Task DeleteAddressFinal()
         {
-            if (address != null)
-            {
+            
                 await AddressRepository.DeleteAddressAsync(address.id);
                 deleteAddress = false;
-            }
+            
         }
 
         public async Task EditAddress(int id)
@@ -66,7 +56,7 @@ partial class ViewRoute
         {
             deleteAddress = true;
             address = await AddressRepository.FindAddressForRouteByIdAsync(SelectionService.selectedRoute.Id, id);
-            await DeleteAddressFinal();
+            //await DeleteAddressFinal();
         }
 
         private void CloseEditModal()
