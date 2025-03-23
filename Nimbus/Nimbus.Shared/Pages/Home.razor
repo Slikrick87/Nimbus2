@@ -8,6 +8,21 @@
 @inject IFormFactor FormFactor
 
 <PageTitle>Home</PageTitle>
+@if (TruckRepository.GetAllTrucksAsync() == null && RouteRepository.GetAllRoutesAsync() == null)
+{
+    <h1>No Trucks or Routes Found</h1>
+    <h2>Please add Trucks and Routes To Database</h2>
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="addRoute">
+            <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Add Route
+        </NavLink>
+        </div>
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="addTruck">
+            <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Add Truck
+        </NavLink>
+    </div>
+}
 @if (SelectionService.selectedTruck != null)
 {
     <h1>Selected Truck: @SelectionService.selectedTruck.id</h1>
