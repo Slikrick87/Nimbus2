@@ -45,3 +45,15 @@ Create unit tests to aid in reliability and debugging program
 
 implement regex to ensure proper address input
 
+
+Requirements I've met:
+1. Integrated an SQLite CRUD database with three tables with relationships between addresses which tied to routes list and trucks table with mileage for commonly serviced parts
+   is tied to routes to display which trucks are on which route.
+2. In Nimbus/Nimbus.Shared/Maps.razor I Implemented a Google Maps API and Google Geocode Api to get coordinates and display a map with pins showing where each address is in a particular route's stops table.
+3. Implemented dozens of Functions/Methods
+4. Through the use of a List (Nimbus/Nimbus.Shared/Maps.razor) I have created a way for the driver to reorder the list of addresses at their discretion.(which won't be of much use until
+   I can implement a google directions api to allow the driver to get directions provided to each address and hopefully just hit a button to give directions to the next address on list)
+4. Exposed an endpoint in Nimbus/Nimbus.Web.API to allow database interactions like adding addresses to a route or deleting routes(not tied to Nimbus Project has to run independently)
+5. Made basically the entire project asynchronous (can mostly be found in Nimbus/Nimbus.Shared/Repositories) except one or two methods I just recently added and haven't gotten around to making async yet.
+6. Have three tables in my database with relationships between them.
+
