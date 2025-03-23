@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Nimbus.Shared.Services;
 using Nimbus.Web.Client.Services;
 

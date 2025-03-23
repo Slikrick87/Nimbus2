@@ -21,31 +21,31 @@
 
                     <div class="form-group">
                         <label for="streetNumber">Street Number: </label>
-                        <InputNumber id="streetNumber" class="form-control" @bind="@Address.streetNumber" />
+                        <InputNumber TValue="int" id="streetNumber" class="form-control" @bind-Value="@Address.streetNumber" />
                         <ValidationMessage For="@(() => Address.streetNumber)" />
                     </div>
 
                     <div class="form-group">
                         <label for="streetName">Street Name: </label>
-                        <InputText id="streetName" class="form-control" @bind="@Address.streetName" />
+                        <InputText id="streetName" class="form-control" @bind-Value="@Address.streetName" />
                         <ValidationMessage For="@(() => Address.streetName)" />
                     </div>
 
                     <div class="form-group">
                         <label for="city">City: </label>
-                        <InputText id="city" class="form-control" @bind="@Address.city" />
+                        <InputText id="city" class="form-control" @bind-Value="@Address.city" />
                         <ValidationMessage For="@(() => Address.city)" />
                     </div>
 
                     <div class="form-group">
                         <label for="state">State: </label>
-                        <InputText id="state" class="form-control" @bind="@Address.state" />
+                        <InputText id="state" class="form-control" @bind-Value="@Address.state" />
                         <ValidationMessage For="@(() => Address.state)" />
                     </div>
 
                     <div class="form-group">
                         <label for="zipCode">Zip: </label>
-                        <InputNumber id="zip" class="form-control" @bind="@Address.zipCode" />
+                        <InputNumber TValue="int" id="zip" class="form-control" @bind-Value="@Address.zipCode" />
                         <ValidationMessage For="@(() => Address.zipCode)" />
                     </div>
                         <button type="submit" class="btn btn-primary">Save Address</button>

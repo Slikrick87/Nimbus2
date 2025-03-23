@@ -38,7 +38,7 @@
                         <EditForm Model="@address">
                             <div class="form-group">
                                 <label for="streetNumber">Street Number</label>
-                                <InputNumber id="streetNumber" class="form-control" @bind="address.streetNumber" />
+                                <InputNumber TValue="int" id="streetNumber" class="form-control" @bind="address.streetNumber" />
                             </div>
                             <div class="form-group">
                                 <label for="streetName">Street Name</label>
@@ -54,7 +54,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="zipCode">Zip Code</label>
-                                <InputNumber id="zipCode" class="form-control" @bind="address.zipCode" />
+                                <InputNumber TValue="int" id="zipCode" class="form-control" @bind="address.zipCode" />
                             </div>
                         </EditForm>
                     </div>
