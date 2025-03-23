@@ -1,6 +1,7 @@
 Nimbus is a Navigational application that currently only targets windows
 
-
+hate to admit it but had to start a new Repository for this project so instead of deleting a ton of **/obj/** and **/bin/** folders I should not have been tracking
+but was because of my poor .git ignore file. between time and to display my jourmey I decided to just own it and display it https://github.com/Slikrick87/Nimbus
 
 Will have to run some commands in powershell to get the database up and running
 
