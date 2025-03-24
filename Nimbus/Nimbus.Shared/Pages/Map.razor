@@ -75,6 +75,7 @@
     @if (SelectionService.selectedRoute != null && SelectionService.selectedRoute.stops != null && SelectionService.orderedStopsForRoute != null)
     {
         <ol>
+            @SelectionService.orderedStopsForRoute = SelectionService.selectedRoute.stops.OrderBy(s => s.order).ToList();
             @foreach (Address stop in SelectionService.orderedStopsForRoute)
             {
                 int index = 0;
@@ -82,6 +83,7 @@
                     @stop.streetNumber @stop.streetName, @stop.city, @stop.state @stop.zipCode
                     <button @onclick="() => MoveUp(index)">Up</button>
                     <button @onclick="() => MoveDown(index)">Down</button>
+                    <button @onclick="() => WindowOpen(stop)">Get Directions</button>
                 </li>
                 index++;
             }
@@ -91,7 +93,7 @@
 @code {
 
     //need to call an addmarker method to add markers to the map
-    
+
     public class GeoCodeResult
     {
         public double lat { get; set; }
@@ -191,6 +193,14 @@
         {
             return "lat: 37.7749, lng: -122.4194";
         }
+    }
+    public async Task WindowOpen(Address stop)
+    {
+        var json = await JS.InvokeAsync<string>("geocodeAddress", stop);
+        var location = JsonSerializer.Deserialize<GeoCodeResult>(json);
+        var latlong = await GetLatLong();
+        var url = $"https://www.google.com/maps/dir/?api=1&destination={latlong}";
+        await JS.InvokeVoidAsync("open", url, "_blank");
     }
 
 }

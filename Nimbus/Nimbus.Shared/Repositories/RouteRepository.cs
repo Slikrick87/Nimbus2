@@ -58,7 +58,7 @@ namespace Nimbus.Shared.Repositories
             RouteEntity route = await GetRouteByIdAsync(routeId);
             TruckEntity truck = await truckRepository.GetTruckByIdAsync(truckId);
             route.truck = truck;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
         public async Task<List<Address>> GetAddressesByRoute(int routeId)
         {

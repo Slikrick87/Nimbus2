@@ -38,14 +38,6 @@ namespace Nimbus.Shared.Pages
                 return Task.CompletedTask;
             }
         }
-        //private void ValidateMileage(ChangeEventArgs e)
-        //{
-        //    if (int.TryParse(e.Value.ToString(), out int newMileage))
-        //    {
-        //        updatedMileage = newMileage;
-        //        isUpdateButtonDisabled = updatedMileage < currentMileage;
-        //    }
-        //}
         private void ValidateMileage(ChangeEventArgs e)
         {
             if (int.TryParse(e.Value.ToString(), out int newMileage))
@@ -62,7 +54,7 @@ namespace Nimbus.Shared.Pages
         {
             if (SelectionService.selectedTruck != null && updatedMileage>= currentMileage)
             {
-                await TruckRepository.AdjustMileageAsync(SelectionService.selectedTruck.id, updatedMileage);
+                TruckRepository.AdjustMileageAsync(SelectionService.selectedTruck.id, updatedMileage);
             }
         }
     }
