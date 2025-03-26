@@ -17,7 +17,7 @@ namespace Nimbus.Shared.Repositories
         public async Task AddStopAsync(Address address)
         {
             await Task.Run(() => _context.Addresses.Add(address));
-            Task taskTwo = Task.Run(() => _context.SaveChangesAsync());
+            await Task.Run(() => _context.SaveChangesAsync());
         }
         public async Task<Address> CreateNewAddressAsync(int streetNumber, string streetName, string city, string state, int zip)
         {
@@ -42,14 +42,14 @@ namespace Nimbus.Shared.Repositories
             try { return await _context.Addresses.FindAsync(id); }
             catch { return null; }
         }
-        public async Task<List<Address>> GetAddressesByRoute(int routeId)
+        public List<Address> GetAddressesByRoute(int routeId)
         {
-            List<Address> addresses = await Task.Run(() => _context.Addresses.Where(a => a.routeId == routeId).ToList());
+            List<Address> addresses = _context.Addresses.Where(a => a.routeId == routeId).ToList();
             return addresses;
         }
         public async Task ConvertToJSAddressByRoute(int routeId)
         {
-            List<Address> addresses = await Task.Run(() => GetAddressesByRoute(routeId).Result);
+            List<Address> addresses = await Task.Run(() => GetAddressesByRoute(routeId));
             string jsAddress;
             int counter = 0;
             foreach (var item in addresses)
@@ -71,7 +71,7 @@ namespace Nimbus.Shared.Repositories
         }
         public async Task UpdateAddressAsync(Address address)
         {
-            _context.Addresses.Update(address);
+            await Task.Run(() => _context.Addresses.Update(address));
             await _context.SaveChangesAsync();
         }
         public async Task<Address> FindAddressForRouteByIdAsync(int RouteId, int AddressId)
@@ -92,7 +92,7 @@ namespace Nimbus.Shared.Repositories
         public async Task DeleteAddressAsync(int id)
         {
             Address address = await GetAddressByIdAsync(id);
-            _context.Addresses.Remove(address);
+            await Task.Run(() =>_context.Addresses.Remove(address));
             await _context.SaveChangesAsync();
         }
     }

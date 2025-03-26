@@ -10,7 +10,37 @@
 <h3>View Route</h3>
 @if(SelectionService.selectedRoute != null && SelectionService.selectedRoute.stops != null )
 {
-    <ol>
+    <table class="table">
+            <thead>
+                <tr>
+                    <th>Order #</th>
+                    <th>Street Number</th>
+                    <th>Street Name</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Zip Code</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Address stop in SelectionService.orderedStopsForRoute)
+                {
+                    int index = @SelectionService.orderedStopsForRoute.IndexOf(stop);
+                    <tr>
+
+                        <td>@(index + 1)</td>
+                        <td>@stop.streetNumber</td>
+                        <td>@stop.streetName</td>
+                        <td>@stop.city</td>
+                        <td>@stop.state</td>
+                        <td>@stop.zipCode</td>
+                        <td><button class="btn btn-primary" @onclick="() => EditAddress(stop.id)">Edit</button></td>
+                        <td><button class="alert-danger" @onclick="() => DeleteAddress(stop.id)">Delete</button></td>
+                       
+                    </tr>
+                }
+            </tbody>
+    </table>
+    @* <ol>
         @foreach (Address stop in allStops)
         {
             <li>
@@ -19,7 +49,7 @@
                 <button class="alert-danger" @onclick="() => DeleteAddress(stop.id)">Delete</button>
             </li>
         }
-    </ol>
+    </ol> *@
     @if (editAddress)
     {
         @* <input type="number" @bind="stop.streetNumber" placeholder="stop.streetNumber"/>

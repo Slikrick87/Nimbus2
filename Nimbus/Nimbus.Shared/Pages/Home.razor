@@ -8,7 +8,7 @@
 @inject IFormFactor FormFactor
 
 <PageTitle>Home</PageTitle>
-@if (TruckRepository.GetAllTrucksAsync() == null && RouteRepository.GetAllRoutesAsync() == null)
+@if (TruckRepository.GetAllTrucksAsync().Result == null && RouteRepository.GetAllRoutesAsync().Result == null)
 {
     <h1>No Trucks or Routes Found</h1>
     <h2>Please add Trucks and Routes To Database</h2>
@@ -23,15 +23,15 @@
         </NavLink>
     </div>
 }
-@if (SelectionService.selectedTruck != null)
+else if (SelectionService.selectedTruck != null)
 {
     <h1>Selected Truck: @SelectionService.selectedTruck.id</h1>
     @* <h1>Selected Route: @route.Id, @route.nickName</h1> *@
     <div>
         <h3>Enter Current Mileage: </h3>
-        <h3>@currentMileage</h3>
-        <input type="number" @bind="updatedMileage" Min="@currentMileage" @oninput="ValidateMileage"/>
-        <button class="btn btn-primary" @onclick="UpdateMileageAsync" disabled="@isUpdateButtonDisabled">Set Mileage</button>
+        <h3>@SelectionService.selectedTruck.mileage</h3>
+        <input type="number" @bind="updatedMileage" Min="@currentMileage"/>
+        <button class="btn btn-primary" @onclick="UpdateMileageAsync">Set Mileage</button>
     </div>
     <div class="nav-item px-3">
         <NavLink class="nav-link" href="selectRoute">
@@ -49,6 +49,13 @@ else if (SelectionService.selectedTruck == null)
             <label>Truck Id: @truck.id Mileage: @truck.mileage</label>
         </div>
     }
+
+
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="addTruck">
+            <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span>Click Here To Add A New Truck
+        </NavLink>
+    </div>
 }
 else
 {

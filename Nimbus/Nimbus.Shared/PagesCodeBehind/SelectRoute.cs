@@ -21,20 +21,21 @@ namespace Nimbus.Shared.Pages
         public List<RouteEntity> routes = new List<RouteEntity>();
         public async Task ChooseRoute(int id)
         {
-            SelectionService.selectedRoute = await RouteRepository.GetRouteByIdAsync(id);
+            SelectionService.selectedRoute = RouteRepository.GetRouteByIdAsync(id).Result;
+            //await Task.Yield(); // Ensure the selected route is set before proceeding
         }
         public async Task LinkTruckAndRouteAsync()
         {
             bool isLoading = true;
             try
             {
-                Task taskOne =  RouteRepository.LinkTruckAsync(SelectionService.selectedTruck!.id, SelectionService.selectedRoute!.Id);
-                Task taskTwo = TruckRepository.LinkRouteAsync(SelectionService.selectedRoute.Id, SelectionService.selectedTruck.id);
+                Task taskOne = RouteRepository.LinkTruckAsync(SelectionService.selectedRoute.Id, SelectionService.selectedTruck.id);
+                Task taskTwo = TruckRepository.LinkRouteAsync(SelectionService.selectedTruck.id, SelectionService.selectedRoute.Id);
                 Task<List<Address>> taskThree = RouteRepository.GetStopsAsync(SelectionService.selectedRoute.Id);
                 SelectionService.orderedStopsForRoute = await taskThree;
                 await Task.WhenAll(taskOne, taskTwo, taskThree);
             }
-            catch(Exception E)
+            catch (Exception E)
             {
                 Debug.WriteLine(E.Message);
             }

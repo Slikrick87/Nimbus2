@@ -4,6 +4,7 @@ using Nimbus.Shared.Logic;
 using Nimbus.Shared.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
@@ -55,8 +56,12 @@ namespace Nimbus.Shared.Repositories
         public async Task LinkTruckAsync(int routeId, int truckId)
         {
             TruckRepository truckRepository = new TruckRepository(_context);
+            Debug.WriteLine("Truck dbContext created");
+            //Debug.WriteLine($"");
             RouteEntity route = await GetRouteByIdAsync(routeId);
+            Debug.WriteLine($"Route found: {routeId}");
             TruckEntity truck = await truckRepository.GetTruckByIdAsync(truckId);
+            Debug.WriteLine($"Truck found: {truck.id}");
             route.truck = truck;
             await _context.SaveChangesAsync();
         }

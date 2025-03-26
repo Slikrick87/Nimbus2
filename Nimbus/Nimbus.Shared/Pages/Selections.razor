@@ -9,14 +9,25 @@
 
 @if (SelectionService.selectedRoute != null)
 {
-
-    <h1>Selected Route:</h1>
-    <form>
-        <h2>ID: @SelectionService.selectedRoute.Id</h2>
-        <h2>Nickname: @SelectionService.selectedRoute.nickName</h2>
-        <h2>Truck ID: @SelectionService.selectedRoute.truckId</h2>
-        <h2>Number of Stops: @(SelectionService.selectedRoute.stops?.Count)</h2>
-    </form>
+    <h2>Selected Route</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID #</th>
+                <th>NickName</th>
+                <th>Truck # on Route</th>
+                <th>Number of Stops</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>@SelectionService.selectedRoute.Id</td>
+            <td>@SelectionService.selectedRoute.nickName</td>
+            <td>@SelectionService.selectedRoute.truck.id</td>
+            <td>@SelectionService.selectedRoute.stops.Count</td>
+        </tr>
+        </tbody>
+    </table>
 }
 else
 {
@@ -24,6 +35,34 @@ else
 }
 @if(SelectionService.selectedTruck != null)
 {
+    <h2>Selected Truck</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID #</th>
+                <th>Route # on Truck</th>
+                <th>Mileage</th>
+                <th>Oil Mileage</th>
+                <th>FP Tire Mileage</th>
+                <th>FD Tire Mileage</th>
+                <th>RP Tire Mileage</th>
+                <th>RD Tire Mileage</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@SelectionService.selectedTruck.id</td>
+                <td>@SelectionService.selectedTruck.route.Id</td>
+                <td>@SelectionService.selectedTruck.mileage</td>
+                <td>@SelectionService.selectedTruck.oilChange</td>
+                <td>@SelectionService.selectedTruck.tireFP</td>
+                <td>@SelectionService.selectedTruck.tireFD</td>
+                <td>@SelectionService.selectedTruck.tireRP</td>
+                <td>@SelectionService.selectedTruck.tireFD</td>
+
+            </tr>
+        </tbody>
+    </table>
     <style>
         .button-container {
             display: block;
@@ -34,26 +73,18 @@ else
         }
     </style>
     <form display="align: center;">
-        
-        <h1>Selected Truck:</h1>
-        <h2>ID: @SelectionService.selectedTruck.id</h2>
-        <h2>Mileage: @SelectionService.selectedTruck.mileage  </h2>
+  
         <div style ="align-items: center">
         <div style="display: flex; align-items: center;">
-        <h2>Oil Mileage: @SelectionService.selectedTruck.oilChange  </h2> 
         <button class="button-container" @onclick="OilChange">Oil Changed</button>
         </div> <div style="display: flex; align-items: center;">
-        <h2>Front Driver Tire: @SelectionService.selectedTruck.tireFD  </h2>
-            <button class="button-container" @onclick="TireFDChange">Front Driver Tire Changed</button>
+        <button class="button-container" @onclick="TireFDChange">Front Driver Tire Changed</button>
         </div> <div style="display: flex; align-items: center;">
-        <h2>Front Passenger Tire: @SelectionService.selectedTruck.tireFP  </h2>
-            <button class="button-container" @onclick="TireFPChange">Front Passenger Tire Changed</button>
+        <button class="button-container" @onclick="TireFPChange">Front Passenger Tire Changed</button>
         </div> <div style="display: flex; align-items: center;">
-        <h2>Rear Driver Tire: @SelectionService.selectedTruck.tireRD  </h2>
-            <button class="button-container" @onclick="TireRDChange">Rear Driver Tire Changed</button>
+        <button class="button-container" @onclick="TireRDChange">Rear Driver Tire Changed</button>
         </div> <div style="display: flex; align-items: center;">
-        <h2>Rear Passenger Tire: @SelectionService.selectedTruck.tireRP  </h2>
-            <button class="button-container" @onclick="TireRPChange">Rear Passenger Tire Changed</button>
+        <button class="button-container" @onclick="TireRPChange">Rear Passenger Tire Changed</button>
         </div>
         </div>
         <br />

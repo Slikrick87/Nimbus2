@@ -1,0 +1,40 @@
+﻿@using Nimbus.Shared.Entities;
+@using Nimbus.Shared.Repositories;
+@using Nimbus.Shared.Services;
+@inject ITruckRepository TruckRepository;
+@page "/viewTrucks"
+<h3>ViewTrucks</h3>
+<table class="table">
+        <thead>
+            <tr>
+                <th>Truck Id #</th>
+             @* <th>Nick Name</th> *@
+                <th>Mileage</th>
+                <th>Oil Change</th>
+                <th>FP Tire</th>
+                <th>RP Tire</th>
+                <th>FD Tire</th>
+                <th>RD Tire</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (TruckEntity truck in TruckRepository.GetAllTrucksAsync().Result)
+        {
+            <tr>
+                <td>@truck.id</td>
+                @* <td>@truck.nickName</td> *@
+                <td>@truck.mileage</td>
+                <td>@truck.oilChange</td>
+                <td>@truck.tireFP</td>
+                <td>@truck.tireRP</td>
+                <td>@truck.tireFD</td>
+                <td>@truck.tireRD</td>
+                @* <td>@truck.nickName</td> *@
+                <td><button class="btn btn-primary" @onclick="() => TruckRepository.DeleteTruckAsync(truck.id)">Delete</button></td>
+            </tr>
+        }
+        </tbody>
+</table>
+@code {
+
+}

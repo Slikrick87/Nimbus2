@@ -20,7 +20,7 @@ namespace Nimbus.Shared.Services
 
         public Task<List<Address>> GetAllAddressesAsync();
         public Task<Address> GetAddressByIdAsync(int id);
-        public Task<List<Address>> GetAddressesByRoute(int routeId);
+        public List<Address> GetAddressesByRoute(int routeId);
         public Task ConvertToJSAddressByRoute(int routeId);
         public Task<Address> FindAddressForRouteByIdAsync(int RouteId, int AddressId);
         public Task UpdateAddressAsync(Address address);

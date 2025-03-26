@@ -7,6 +7,7 @@
 @using System.Linq;
 @using System.Text.Json;
 @using Microsoft.JSInterop;
+@using System.Diagnostics
 
 @page "/map"
 
@@ -71,29 +72,55 @@
 
 </script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=@Keys.mapsKey"></script>
-<div id="orderedStops">
+@* <div id="orderedStops"> *@
+<table class="table">
     @if (SelectionService.selectedRoute != null && SelectionService.selectedRoute.stops != null && SelectionService.orderedStopsForRoute != null)
     {
-        <ol>
-            @SelectionService.orderedStopsForRoute = SelectionService.selectedRoute.stops.OrderBy(s => s.order).ToList();
+        @* <ol> *@
+        <thead>
+            <tr>
+                <th>Order #</th>
+                <th>Street Number</th>
+                <th>Street Name</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Zip Code</th>
+            </tr>
+        </thead>
+        <tbody>
+            @* @SelectionService.orderedStopsForRoute = SelectionService.selectedRoute.stops.OrderBy(s => s.order).ToList(); *@
             @foreach (Address stop in SelectionService.orderedStopsForRoute)
             {
-                int index = 0;
-                <li>
-                    @stop.streetNumber @stop.streetName, @stop.city, @stop.state @stop.zipCode
+                int index = @SelectionService.orderedStopsForRoute.IndexOf(stop);
+                <tr>
+
+                    <td>@(index+1)</td>
+                    <td>@stop.streetNumber</td>
+                    <td>@stop.streetName</td>
+                    <td>@stop.city</td>
+                    <td>@stop.state</td>
+                    <td>@stop.zipCode</td>
+                    <td><button @onclick="() => MoveUp(index)">Up</button></td>
+                    <td><button @onclick="() => MoveDown(index)">Down</button></td>
+                    @* @stop.streetNumber 
+                    @stop.streetName
+                    @stop.city 
+                    @stop.state 
+                    @stop.zipCode
                     <button @onclick="() => MoveUp(index)">Up</button>
-                    <button @onclick="() => MoveDown(index)">Down</button>
-                    <button @onclick="() => WindowOpen(stop)">Get Directions</button>
-                </li>
-                index++;
+                    <button @onclick="() => MoveDown(index)">Down</button> *@
+                    @* <button @onclick="() => WindowOpen(stop)">Get Directions</button> *@
+                    @* </li> *@
+                </tr>
             }
-        </ol>
+        </tbody>
+        @* </ol> *@
     }
-</div>
+</table>
+@* </div> *@
 @code {
-
     //need to call an addmarker method to add markers to the map
-
+    //int index = 1;
     public class GeoCodeResult
     {
         public double lat { get; set; }
@@ -122,9 +149,9 @@
     {
         if (SelectionService.selectedRoute != null)
         {
-            var addresses = await AddressRepository.GetAddressesByRoute(SelectionService.selectedRoute.Id);
+            var addresses = AddressRepository.GetAddressesByRoute(SelectionService.selectedRoute.Id);
             var addressStrings = addresses.Select(a => $"{a.streetNumber} {a.streetName}, {a.city}, {a.state} {a.zipCode}").ToList();
-
+            
 
             foreach (var address in addressStrings)
             {
@@ -140,36 +167,42 @@
     }
     private async Task MoveUp(int key)
     {
-        try
+        if (key >= 0)
         {
-            var stops = SelectionService.selectedRoute.stops.ToList();
-            var temp = stops[key];
-            stops[key] = stops[key - 1];
-            stops[key - 1] = temp;
-            SelectionService.ReorderStopsForRoute(stops);
-            StateHasChanged();
-            await UpdateMap();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error moving stop up: {ex.Message}");
+            try
+            {
+                var stops = SelectionService.orderedStopsForRoute;
+                var temp = stops[key];
+                stops[key] = stops[key - 1];
+                stops[key - 1] = temp;
+                await SelectionService.ReorderStopsForRoute(stops);
+                StateHasChanged();
+                await UpdateMap();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error moving stop up: {ex.Message}");
+            }
         }
     }
     private async Task MoveDown(int key)
     {
-        try
+        if (key < SelectionService.orderedStopsForRoute.Count - 1)
         {
-            var stops = SelectionService.orderedStopsForRoute.ToList();
-            var temp = stops[key];
-            stops[key] = stops[key + 1];
-            stops[key + 1] = temp;
-            SelectionService.ReorderStopsForRoute(stops);
-            StateHasChanged();
-            await UpdateMap();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error moving stop up: {ex.Message}");
+            try
+            {
+                var stops = SelectionService.orderedStopsForRoute;
+                var temp = stops[key];
+                stops[key] = stops[key + 1];
+                stops[key + 1] = temp;
+                SelectionService.ReorderStopsForRoute(stops);
+                StateHasChanged();
+                await UpdateMap();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error moving stop up: {ex.Message}");
+            }
         }
     }
     private async Task UpdateMap()

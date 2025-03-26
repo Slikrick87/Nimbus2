@@ -25,10 +25,8 @@ namespace Nimbus.Shared.Repositories
         //}
         public async Task ReorderStopsForRoute(List<Address> newOrder)
         {
-            if (selectedRoute != null)
-            {
                 orderedStopsForRoute = newOrder;
-            }
+            
         }
     }
 
