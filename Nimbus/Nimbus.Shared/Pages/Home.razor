@@ -7,8 +7,16 @@
 @inject SelectionService SelectionService;
 @inject IFormFactor FormFactor
 
+@* Page is a working mess sorry *@
+
 <PageTitle>Home</PageTitle>
-@if (TruckRepository.GetAllTrucksAsync().Result == null && RouteRepository.GetAllRoutesAsync().Result == null)
+@if (truckCheck == null && routeCheck == null)
+          {
+    <h1>Testing Dudes (or dudettes) click below to add entities to Database for testing out application.</h1>
+<button class="btn btn-primary" @onclick="AddToDBForTesting">Cowabunga Dudes!</button>
+<h4>Unfortunately ran out of time and you may have to switch pages then come back to get correct home page to load</h4>
+}
+@if (truckCheck == null && routeCheck == null)
 {
     <h1>No Trucks or Routes Found</h1>
     <h2>Please add Trucks and Routes To Database</h2>
@@ -74,7 +82,6 @@ else
         </NavLink>
     </div>
 }
-
 @* 
     //scaffold Api call to database to meet requirement to serve an api repository endpoints
     //Can move @code to a partial class with same name such as Home.cs

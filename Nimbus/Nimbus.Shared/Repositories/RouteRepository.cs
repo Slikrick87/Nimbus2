@@ -42,8 +42,9 @@ namespace Nimbus.Shared.Repositories
             try { return await _context.Routes.FindAsync(id); }
             catch { return null; }
         }
-        public async Task<Address> AddStopAsync(RouteEntity route, Address address)
+        public async Task<Address> AddStopToRouteAsync(RouteEntity route, Address address)
         {
+            await Task.Run(() => address.routeId = route.Id);
             await Task.Run(() => _context.Addresses.Add(address));
             Task taskOne = Task.Run(() => _context.SaveChangesAsync());
             

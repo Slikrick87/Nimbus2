@@ -42,7 +42,6 @@ public static class MauiProgram
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
                 dbContext.Database.EnsureCreated();
-                dbContext.Database.Migrate();
             }
 
 #if DEBUG

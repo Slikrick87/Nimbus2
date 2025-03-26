@@ -17,7 +17,7 @@ namespace Nimbus.Shared.Services
         public Task<RouteEntity> CreateNewRouteAsync();
         public Task<List<RouteEntity>> GetAllRoutesAsync();
         public Task<RouteEntity> GetRouteByIdAsync(int id);
-        public Task<Address> AddStopAsync(RouteEntity route, Address address);
+        public Task<Address> AddStopToRouteAsync(RouteEntity route, Address address);
         public Task<List<Address>> GetStopsAsync(int routeId);
         public Task LinkTruckAsync(int routeId, int truckId);
         public Task DeleteRouteAsync(int id);

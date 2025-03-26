@@ -30,7 +30,7 @@ namespace Nimbus.Shared.Pages
             try
             {
                 newAddress = await AddressRepository.CreateNewAddressWithRouteAsync(streetNumber, streetName, city, state, zipCode, SelectionService.selectedRoute);
-                await RouteRepository.AddStopAsync(SelectionService.selectedRoute, newAddress);
+                await RouteRepository.AddStopToRouteAsync(SelectionService.selectedRoute, newAddress);
                 SelectionService.orderedStopsForRoute.Add(newAddress);
                 stopsAdded++;
             }
