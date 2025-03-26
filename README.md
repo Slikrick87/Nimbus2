@@ -5,11 +5,13 @@ but was because of my poor .git ignore file. between time and to display my jour
 
 Will have to run some commands in powershell to get the database up and running
 
+(navigate to **/Nimbus2/Nimbus/Nimbus/Nimbus.Shared to run these commands)
+just running 
+dotnet ef database may be enough but if not run the following commands in order:
+
 dotnet tool install --global dotnet-ef
 
 dotnet add package Microsoft.EntityFrameworkCore.Design
-
-dotnet ef migrations add InitialCreate
 
 dotnet ef database update
 
