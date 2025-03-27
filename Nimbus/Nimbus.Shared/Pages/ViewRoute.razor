@@ -40,20 +40,11 @@
                 }
             </tbody>
     </table>
-    @* <ol>
-        @foreach (Address stop in allStops)
-        {
-            <li>
-                @stop.streetNumber @stop.streetName, @stop.city, @stop.state @stop.zipCode 
-                <button class="btn btn-primary" @onclick="() => EditAddress(stop.id)">Edit</button>
-                <button class="alert-danger" @onclick="() => DeleteAddress(stop.id)">Delete</button>
-            </li>
-        }
-    </ol> *@
+    
     @if (editAddress)
     {
         @* <input type="number" @bind="stop.streetNumber" placeholder="stop.streetNumber"/>
-                <input type="string" @bind="stop.streetName" placeholder="stop.streetName" /> *@
+                <input type="string" @bind="stop.streetName" placeholder="stop.streetName" /> *@ 
 
         <div class="modal show d-block" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
@@ -68,23 +59,23 @@
                         <EditForm Model="@address">
                             <div class="form-group">
                                 <label for="streetNumber">Street Number</label>
-                                <InputNumber TValue="int" id="streetNumber" class="form-control" @bind="address.streetNumber" />
+                                <InputNumber TValue="int" id="streetNumber" class="form-control" @bind-value="address.streetNumber" />
                             </div>
                             <div class="form-group">
                                 <label for="streetName">Street Name</label>
-                                <InputText id="streetName" class="form-control" @bind="address.streetName" />
+                                <InputText id="streetName" class="form-control" @bind-value="address.streetName" />
                             </div>
                             <div class="form-group">
                                 <label for="city">City</label>
-                                <InputText id="city" class="form-control" @bind="address.city" />
+                                <InputText id="city" class="form-control" @bind-value="address.city" />
                             </div>
                             <div class="form-group">
                                 <label for="state">State</label>
-                                <InputText id="state" class="form-control" @bind="address.state" />
+                                <InputText id="state" class="form-control" @bind-value="address.state" />
                             </div>
                             <div class="form-group">
                                 <label for="zipCode">Zip Code</label>
-                                <InputNumber TValue="int" id="zipCode" class="form-control" @bind="address.zipCode" />
+                                <InputNumber TValue="int" id="zipCode" class="form-control" @bind-value="address.zipCode" />
                             </div>
                         </EditForm>
                     </div>

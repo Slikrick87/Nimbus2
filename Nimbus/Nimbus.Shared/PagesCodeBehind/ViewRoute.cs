@@ -4,6 +4,7 @@ using Nimbus.Shared.Repositories;
 using Nimbus.Shared.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
@@ -39,8 +40,11 @@ partial class ViewRoute
 
         public async Task EditAddress(int id)
         {
+            Debug.WriteLine("Editing address with ID: " + id);
             editAddress = true;
+            Debug.WriteLine("Edit address modal opened: " + editAddress);
             address = await AddressRepository.FindAddressForRouteByIdAsync(SelectionService.selectedRoute.Id, id);
+            Debug.WriteLine("Address retrieved:" + address.streetNumber + address.streetName);
         }
 
         public async Task SaveAddressAsync()

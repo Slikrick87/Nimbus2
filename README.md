@@ -46,6 +46,8 @@ Create unit tests to aid in reliability and debugging program
 
 implement regex to ensure proper address input
 
+also sometimes the waypoints for the google map API do not load in on the first page render so if they do not load may have to navigate to another page then back again
+hopefully they load in first attempt but if not just a minor inconvenience that I'm working on fixing
 
 Requirements I've met:
 1. Integrated an SQLite CRUD database with three tables with relationships between addresses which tied to routes list and trucks table with mileage for commonly serviced parts
