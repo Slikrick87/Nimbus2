@@ -5,19 +5,19 @@ Created using a .NET Maui Blazor Framework built for Server Side and Web Assembl
 hate to admit it but had to start a new Repository for this project so instead of deleting a ton of **/obj/** and **/bin/** folders I should not have been tracking
 but was because of my poor .git ignore file. between time and to display my jourmey I decided to just own it and display it https://github.com/Slikrick87/Nimbus
 
+--------------------------------------------------------------------------------
 Will have to run some commands in powershell to get the database up and running
 
-(navigate to **/Nimbus2/Nimbus/Nimbus/Nimbus.Shared to run these commands)
+(navigate to **/Nimbus2/Nimbus/Nimbus/Nimbus.Shared in the powershell terminal to run these commands)
 just running 
 dotnet ef database may be enough but if not run the following commands in order:
 
-dotnet tool install --global dotnet-ef
+cd Nimbus
+cd Nimbus.Shared
 
-dotnet add package Microsoft.EntityFrameworkCore.Design
+//Potentially will have to run dotnet update database to initialize the database
+//and may have to apply migrations 
 
-dotnet ef database update
-
-and had to manually change nuget package for Microsoft.EntityFrameworkCore.Design to version 8.0.3
 
 
 Using an SQLite database (local for now but remote database would be best) for the fleet of trucks to more easily track mileage on trucks and some commonly replaced parts like 
