@@ -15,11 +15,11 @@ namespace Nimbus.Shared.Entities
         [Required]
         public int streetNumber;
         [Required]
-        public string streetName;
+        public string? streetName;
         [Required]
-        public string city;
+        public string? city;
         [Required]
-        public string state;
+        public string? state;
         [Required]
         public int zipCode;
         [ForeignKey("Route")]

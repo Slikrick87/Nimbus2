@@ -10,7 +10,7 @@ namespace Nimbus.Shared.Controllers
     class ApiService
     {
         private readonly HttpClient _httpClient;
-        private readonly string _baseUrl;
+        private readonly string? _baseUrl;
 
         public ApiService(HttpClient httpClient, IOptions<ApiSettings> apiSettings)
         {
