@@ -29,12 +29,21 @@ namespace Nimbus.Shared.Pages
         {
             try
             {
+                if (SelectionService?.orderedStopsForRoute == null)
+                {
+                    Console.WriteLine("SelectionService or orderedStopsForRoute is null");
+                    return;
+                }
+
                 newAddress = await AddressRepository.CreateNewAddressWithRouteAsync(streetNumber, streetName, city, state, zipCode, SelectionService.selectedRoute);
                 await RouteRepository.AddStopToRouteAsync(SelectionService.selectedRoute, newAddress);
                 SelectionService.orderedStopsForRoute.Add(newAddress);
                 stopsAdded++;
             }
-            catch { Console.WriteLine("Error in adding new address"); }
+            catch
+            {
+                Console.WriteLine("Error in adding new address");
+            }
         }
     }
 }

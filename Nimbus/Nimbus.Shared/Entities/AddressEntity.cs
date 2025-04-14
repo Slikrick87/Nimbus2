@@ -25,8 +25,8 @@ namespace Nimbus.Shared.Entities
         [ForeignKey("Route")]
         public int? routeId;
         public RouteEntity? route;
-        //public double? Lat { get; set; }
-        //public double? Lng { get; set; }
+        public double? Lat { get; set; }
+        public double? Lng { get; set; }
         //public bool? isDelivered;
         //public DateTime? timeDelivered;
 

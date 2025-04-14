@@ -22,22 +22,29 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (Address stop in SelectionService.orderedStopsForRoute)
-                {
-                    int index = @SelectionService.orderedStopsForRoute.IndexOf(stop);
-                    <tr>
-
-                        <td>@(index + 1)</td>
-                        <td>@stop.streetNumber</td>
-                        <td>@stop.streetName</td>
-                        <td>@stop.city</td>
-                        <td>@stop.state</td>
-                        <td>@stop.zipCode</td>
-                        <td><button class="btn btn-primary" @onclick="() => EditAddress(stop.id)">Edit</button></td>
-                        <td><button class="alert-danger" @onclick="() => DeleteAddress(stop.id)">Delete</button></td>
-                       
-                    </tr>
-                }
+               @if (SelectionService.orderedStopsForRoute != null)
+               {
+                   @foreach (Address stop in SelectionService.orderedStopsForRoute)
+                   {
+                       int index = @SelectionService.orderedStopsForRoute.IndexOf(stop);
+                       <tr>
+                           <td>@(index + 1)</td>
+                           <td>@stop.streetNumber</td>
+                           <td>@stop.streetName</td>
+                           <td>@stop.city</td>
+                           <td>@stop.state</td>
+                           <td>@stop.zipCode</td>
+                           <td><button class="btn btn-primary" @onclick="() => EditAddress(stop.id)">Edit</button></td>
+                           <td><button class="alert-danger" @onclick="() => DeleteAddress(stop.id)">Delete</button></td>
+                       </tr>
+                   }
+               }
+               else
+               {
+                   <tr>
+                       <td colspan="8">No stops available for the selected route.</td>
+                   </tr>
+               }
             </tbody>
     </table>
     

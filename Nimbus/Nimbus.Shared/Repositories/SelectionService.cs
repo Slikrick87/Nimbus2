@@ -11,22 +11,14 @@ namespace Nimbus.Shared.Repositories
     public class SelectionService
     {
         public RouteEntity? selectedRoute { get; set; }
-        //public List<Address>? currentStops { get; set; }
         public TruckEntity? selectedTruck { get; set; }
         public List<Address>? orderedStopsForRoute { get; set; }
-        
-        //public async Task populateOrderedStopsForRoute()
-        //{
-        //    List<Address> addresses = RouteRepository.GetStopsAsync(selectedRoute.Id);
-        //    foreach (Address address in RouteRepository.GetStopsAsync(selectedRoute.Id)
-        //    {
-        //        orderedStopsForRoute.Add(address);
-        //    }
-        //}
-        public async Task ReorderStopsForRoute(List<Address> newOrder)
+
+        public Task ReorderStopsForRoute(List<Address> newOrder)
         {
-                orderedStopsForRoute = newOrder;
-            
+            orderedStopsForRoute = newOrder;
+
+            return Task.CompletedTask;
         }
     }
 
