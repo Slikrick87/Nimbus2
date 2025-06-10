@@ -14,6 +14,7 @@ namespace Nimbus.Shared
         public DbSet<TruckEntity> Trucks { get; set; }
         public DbSet<RouteEntity> Routes { get; set; }
         public DbSet<Address> Addresses { get; set; }
+        public DbSet<MaintenanceEntity> MMRs { get; set; }
         public string DbPath { get; }
         public DataContext()
         {
@@ -35,7 +36,8 @@ namespace Nimbus.Shared
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<TruckEntity>()
-                .HasKey(t => t.id);
+                .Property(t => t.id)
+                .ValueGeneratedNever();
             modelBuilder.Entity<TruckEntity>()
                 .Property(t => t.mileage)
                 .IsRequired();
@@ -55,11 +57,17 @@ namespace Nimbus.Shared
                 .Property(t => t.oilChange)
                 .IsRequired();
             modelBuilder.Entity<TruckEntity>()
+                .HasMany(t => t.MMRs)
+                .WithOne(m => m.Truck)
+                .IsRequired(false)
+                .HasForeignKey(m => m.TruckId);
+            modelBuilder.Entity<TruckEntity>()
                 .HasOne(t => t.route)
                 .WithOne()
                 .HasForeignKey<TruckEntity>(t => t.routeId)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.SetNull);
+
 
             modelBuilder.Entity<TruckEntity>()
                 .ToTable("Trucks");
@@ -83,6 +91,28 @@ namespace Nimbus.Shared
                 .HasForeignKey<RouteEntity>(r => r.truckId)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.SetNull);
+
+
+            modelBuilder.Entity<MaintenanceEntity>()
+                .HasKey(m => m.id);
+            modelBuilder.Entity<MaintenanceEntity>()
+                .Property(m => m.Mileage)
+                .IsRequired();
+            modelBuilder.Entity<MaintenanceEntity>()
+                .Property(m => m.Cost)
+                .IsRequired();
+            modelBuilder.Entity<MaintenanceEntity>()
+                .Property(m => m.Description)
+                .IsRequired(true);
+            modelBuilder.Entity<MaintenanceEntity>()
+                .ToTable("Maintenance Records");
+            modelBuilder.Entity<MaintenanceEntity>()
+                .HasOne(m => m.Truck)
+                .WithMany(t => t.MMRs)
+                .HasForeignKey(m => m.TruckId)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Cascade);
+
 
 
             //Hey update relationships like this ^^^^^^

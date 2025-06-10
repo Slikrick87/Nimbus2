@@ -82,11 +82,11 @@ namespace Nimbus.Shared.Pages
         //Just for Doods and dudettes to test out the DB more easily.
         public async Task AddToDBForTesting()
         {
-            var truck1 = new TruckEntity(11111, 0, 270, 25, 300, 100);
-            var truck2 = new TruckEntity(222, 150, 300, 40, 178, 67);
-            var truck3 = new TruckEntity(27840, 10, 187, 25, 176, 99);
-            var truck4 = new TruckEntity(101560, 5, 87, 77, 690, 1200);
-            var truck5 = new TruckEntity(87, 51, 27, 254, 30, 2100);
+            var truck1 = new TruckEntity(503061, 11111, 0, 270, 25, 300, 100);
+            var truck2 = new TruckEntity(503778, 222, 150, 300, 40, 178, 67);
+            var truck3 = new TruckEntity(505061, 27840, 10, 187, 25, 176, 99);
+            var truck4 = new TruckEntity(467900, 101560, 5, 87, 77, 690, 1200);
+            var truck5 = new TruckEntity(541500, 87, 51, 27, 254, 30, 2100);
             await TruckRepository.AddTruckAsync(truck1);
             await TruckRepository.AddTruckAsync(truck2);
             await TruckRepository.AddTruckAsync(truck3);

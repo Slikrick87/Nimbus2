@@ -27,6 +27,7 @@ namespace Nimbus.Shared.Entities
         public RouteEntity? route;
         public double? Lat { get; set; }
         public double? Lng { get; set; }
+        public int index { get; set; }
         //public bool? isDelivered;
         //public DateTime? timeDelivered;
 

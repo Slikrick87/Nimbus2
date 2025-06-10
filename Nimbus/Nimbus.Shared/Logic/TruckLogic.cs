@@ -9,9 +9,9 @@ namespace Nimbus.Shared.Logic
 {
     public class TruckLogic
     {
-        public TruckEntity AddTruck(int mileage, int tireFd, int tireRd, int tireFp, int tireRp, int oilChange)
+        public TruckEntity AddTruck(int id, int mileage, int tireFd, int tireRd, int tireFp, int tireRp, int oilChange)
         {
-            return new TruckEntity(mileage, tireFd, tireRd, tireFp, tireRp, oilChange);
+            return new TruckEntity(id, mileage, tireFd, tireRd, tireFp, tireRp, oilChange);
         }
     }
 }

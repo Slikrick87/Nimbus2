@@ -1,0 +1,50 @@
+﻿@using Nimbus.Shared.Services;
+@using Nimbus.Shared.Entities;
+@using Nimbus.Shared.Repositories;
+@inject IMMRRepository MMRRepository;
+@inject ITruckRepository TruckRepository;
+@inject IFormFactor FormFactor;
+@page "/addMMR"
+
+<PageTitle>Add MMR</PageTitle>
+
+<h3>AddMMR</h3>
+
+<div class="d-flex">
+    <form method="post">
+        <div>
+            <label for="truckId">Truck ID:</label>
+            <input type="number" name="truckId" @bind="truckId" />
+            <br />
+            <label for="mileage">Mileage:</label>
+            <input type="number" name="mileage" @bind="mileage" />
+            <br /> 
+            <label for="cost">Cost:</label>
+            <input type="number" name="cost" @bind="cost" step="0.01" />
+            <br />
+            <label for="description">Description:</label>
+            <input type="text" name="description" @bind="description" />
+            <br />
+            <label for="date">Date:</label>
+            <input type="date" name="date" @bind="date" />
+            <br />
+            <button class="btn btn-primary" @onclick="AddNewMMR">Confirm</button>
+            <br />
+        </div>
+    </form>
+</div>
+
+@code {
+    public int truckId;
+    public TruckEntity truck;
+    public int mileage;
+    public decimal cost;
+    public string description;
+    public DateTime date;
+    public async Task AddNewMMR()
+    {
+        truck = await TruckRepository.GetTruckByIdAsync(truckId);
+        MaintenanceEntity maintenance = await MMRRepository.CreateNewMMRAsync(mileage, cost, description, date, truck, truckId);
+        await MMRRepository.AddMMRAsync(maintenance);
+    }
+}

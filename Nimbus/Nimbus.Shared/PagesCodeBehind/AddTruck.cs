@@ -10,6 +10,7 @@ namespace Nimbus.Shared.Pages
 {
     public partial class AddTruck
     {
+        public int id;
         public int mileage;
         public string nickName;
         public TruckEntity truck;
@@ -17,7 +18,7 @@ namespace Nimbus.Shared.Pages
         public int TruckMileage = 0;
         public async Task AddNewTruck()
         {
-            truck = await TruckRepository.CreateNewTruckAsync(mileage, 0, 0, 0, 0, 0);
+            truck = await TruckRepository.CreateNewTruckAsync(id, mileage, 0, 0, 0, 0, 0);
             await TruckRepository.AddTruckAsync(truck);
 
         }

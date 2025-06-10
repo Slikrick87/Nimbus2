@@ -84,6 +84,7 @@
 
   <ItemGroup>
     <None Include="..\Nimbus.Shared\Pages\Component.razor" Link="Component.razor" />
+    <None Include="..\Nimbus.Shared\Pages\Component1.razor" Link="Component1.razor" />
   </ItemGroup>
 
 </Project>

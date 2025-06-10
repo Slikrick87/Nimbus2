@@ -53,14 +53,18 @@
     position: { lat: 37.250626, lng: -83.195503 },
     map: map,
     title: "Demo Marker",
+    label: "0",
+    zIndex: 00
     });
     const locations = JSON.parse(locationsJson);
-    locations.forEach(location => {
+    locations.forEach(location, index => {
     console.log("Adding marker at:", location.lat, location.lng, );
     new google.maps.Marker({
     position:  { lat: location.lat, lng: location.lng },
-    zIndex: location.index, 
-    map: map
+    map: map,
+    title: 'Stop ${index + 1}',
+    label: '${index +1}',
+    zIndex: index + 1,
     //label: way to differiantate stops preferably by numbers
     });
     })
@@ -93,9 +97,10 @@
             @foreach (Address stop in SelectionService.orderedStopsForRoute)
             {
                 int index = @SelectionService.orderedStopsForRoute.IndexOf(stop);
+                
                 <tr>
 
-                    <td>@(index+1)</td>
+                    <td>@stop.index+1</td>
                     <td>@stop.streetNumber</td>
                     <td>@stop.streetName</td>
                     <td>@stop.city</td>
@@ -137,7 +142,7 @@
         try
         {
             await GetAddressesAndGeocode();
-            var serializedLocations = JsonSerializer.Serialize(locationsGeoCode);
+            var serializedLocations = JsonSerializer.Serialize(SelectionService.orderedStopsForRoute.ToList());
             await JS.InvokeVoidAsync("initMap", serializedLocations);
             StateHasChanged();
         }

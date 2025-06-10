@@ -31,9 +31,11 @@ public static class MauiProgram
             .AddSingleton<IAddressRepository, AddressRepository>()
             .AddSingleton<IRouteRepository, RouteRepository>()
             .AddSingleton<ITruckRepository, TruckRepository>()
-            .AddSingleton<IGeoLocationService>()
+            .AddSingleton<IGeoLocationService, GeoLocationService>()
+            .AddSingleton<IMMRRepository, MMRRepository>()
             .AddSingleton<SelectionService>()
             .AddMauiBlazorWebView();
+            builder.Services.AddBlazorWebViewDeveloperTools();
 
             //builder.Services.AddControllers();
 

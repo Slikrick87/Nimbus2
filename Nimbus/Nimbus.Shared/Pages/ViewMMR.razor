@@ -1,0 +1,139 @@
+﻿@using Nimbus.Shared.Entities;
+@using Nimbus.Shared.Repositories;
+@using Nimbus.Shared.Services;
+@inject IMMRRepository MMRRepository;
+@page "/viewMMR"
+
+<PageTitle>view MMRs</PageTitle>
+<td><button class="btn btn-primary" @onclick="() => openFilterDates()">Filter List by Dates</button></td>
+<td><button class="btn btn-primary" @onclick="() => openFilterTruckID()">Filter List by TruckID</button></td>
+
+@if (filterCheck == false)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>MMR Id</th>
+                <th>Truck Id</th>
+                <th>Mileage</th>
+                <th>Cost</th>
+                <th>Description</th>
+                <th>Date</th>
+                @* <th>Actions</th> *@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (MaintenanceEntity mmr in mmrs)
+            {
+                <tr>
+                    <td>@mmr.id</td>
+                    <td>@mmr.TruckId</td>
+                    <td>@mmr.Mileage</td>
+                    <td>@mmr.Cost.ToString("C")</td>
+                    <td>@mmr.Description</td>
+                    <td>@mmr.Date.ToShortDateString()</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => MMRRepository.DeleteMMRAsync(mmr.id)">Delete</button>
+                    </td>
+                </tr>
+            })
+        </tbody>
+    </table>
+}
+@if (filterDates)
+{
+    <div class="modal show d-block" tabindex="-1" style="background:rgba(0,0,0,0.5)">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Filter MMRs by Year and Month</h5>
+                    <button type="button" class="btn-close" @onclick="CloseModal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="yearInput" class="form-label">Year</label>
+                        <InputNumber id="yearInput" class="form-control" @bind-Value="year" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="monthInput" class="form-label">Month</label>
+                        <InputNumber id="monthInput" class="form-control" @bind-Value="month" min="1" max="12" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" @onclick="CloseModal">Cancel</button>
+                    <button class="btn btn-primary" @onclick="FilterByMonth">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    if (filterTruckId)
+    {
+        <div class="modal show d-block" tabindex="-1" style="background:rgba(0,0,0,0.5)">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Filter MMRs by Truck ID</h5>
+                        <button type="button" class="btn-close" @onclick="CloseModal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="truckId" class="form-label">Truck ID</label>
+                            <InputNumber id="truckIdInput" class="form-control" @bind-Value="truckId" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" @onclick="CloseModal">Cancel</button>
+                        <button class="btn btn-primary" @onclick="FilterByTruckID">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @code {
+    public bool filterCheck = true;
+    public bool filterDates;
+    public bool filterTruckId;
+    public int truckId;
+    public int year;
+    public int month;
+    List<MaintenanceEntity> mmrs;
+    protected override async Task OnInitializedAsync()
+    {
+        mmrs = MMRRepository.GetAllMMRsAsync().Result;
+    }
+    public async Task FilterByTruckID()
+    {
+        mmrs = MMRRepository.GetMMRsByTruckAsync(truckId).Result;
+        filterCheck = false;
+        filterTruckId = false;
+        StateHasChanged();
+    }
+    public async Task FilterByMonth()
+    {
+        mmrs = MMRRepository.GetMMRsByMonthAsync(year, month).Result;
+        filterCheck = false;
+        filterDates = false;
+        StateHasChanged();
+
+    }
+    public async Task DateFilterCheck()
+    {
+        filterDates = true;
+    }
+    public async Task CloseModal()
+    {
+        filterDates = false;
+        filterTruckId = false;
+    }
+    public async Task openFilterDates()
+    {
+        filterDates = true;
+        StateHasChanged();
+    }
+    public async Task openFilterTruckID()
+    {
+        filterTruckId = true;
+        StateHasChanged();
+    }
+}
+}

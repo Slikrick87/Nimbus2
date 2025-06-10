@@ -1,0 +1,14 @@
+﻿@* @using Nimbus.Shared.Entities;
+@using Nimbus.Shared.Repositories;
+@using Nimbus.Shared.Services;
+@inject IMMRRepository MMRRepository;
+@page "/filterMMRs"
+
+<h3>Filter MMRs</h3>
+<h3>Would You Like TO Filter Maintenance Reports?</h3>
+<button class="btn btn-primary" @onclick="() => EditAddress(stop.id)">Edit</button></td>
+<button class="btn btn-primary" @onclick="() => DeleteAddress(stop.id)">Delete</button></td>
+
+@code {
+
+} *@

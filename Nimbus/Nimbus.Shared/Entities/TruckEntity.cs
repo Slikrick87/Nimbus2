@@ -10,22 +10,24 @@ namespace Nimbus.Shared.Entities
 {
     public class TruckEntity
     {
-        [Key] public int id;
+        [Key]
+        public int id;
         public int mileage;
         public int tireFD;
         public int tireRD;
         public int tireFP;
         public int tireRP;
         public int oilChange;
+        public List<MaintenanceEntity>? MMRs;
         [ForeignKey("Route")]
         public int? routeId;
         public RouteEntity? route;
 
-        TruckEntity() { }
+        public TruckEntity() { }
 
-        public TruckEntity(int mileage, int tireFD, int tireRD, int tireFP, int tireRP, int oil)
+        public TruckEntity(int id, int mileage, int tireFD, int tireRD, int tireFP, int tireRP, int oil)
         {
-            //this.id = id;
+            this.id = id;
             this.mileage = mileage;
             this.tireFD = tireFD;
             this.tireRD = tireRD;

@@ -17,7 +17,7 @@ namespace Nimbus.Shared.Services
         public DbSet<TruckEntity> trucks { get; set; }
         //public void SetselectedTruck(TruckEntity truck);
         public Task AddTruckAsync(TruckEntity truck);
-        public Task<TruckEntity> CreateNewTruckAsync(int mileage, int tireFD, int tireRD, int tireFP, int tireRP, int oil);
+        public Task<TruckEntity> CreateNewTruckAsync(int id, int mileage, int tireFD, int tireRD, int tireFP, int tireRP, int oil);
         public Task<List<TruckEntity>> GetAllTrucksAsync();
         public Task<TruckEntity> GetTruckByIdAsync(int id);
         public Task AdjustMileageAsync(int truckId, int mileage);

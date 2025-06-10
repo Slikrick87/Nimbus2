@@ -31,12 +31,18 @@ namespace Nimbus.Shared.Repositories
         //{
         //    selectedTruck = truck;
         //}
-        public async Task<TruckEntity> CreateNewTruckAsync(int mileage, int tireFD, int tireRD, int tireFP, int tireRP, int oil)
+        public async Task<TruckEntity> CreateNewTruckAsync(int id, int mileage, int tireFD, int tireRD, int tireFP, int tireRP, int oil)
         {
             TruckEntity truck = await Task.Run(() => 
-                new TruckEntity(mileage, tireFD, tireRD, tireFP, tireRP, oil));
+                new TruckEntity(id, mileage, tireFD, tireRD, tireFP, tireRP, oil));
             return truck;
         }
+        //public async Task<TruckEntity> CreateNewTruckWithIdAsync(int id, int mileage, int tireFD, int tireRD, int tireFP, int tireRP, int oil)
+        //{
+        //    TruckEntity truck = await Task.Run(() =>
+        //        new TruckEntity(mileage, tireFD, tireRD, tireFP, tireRP, oil));
+        //    return truck;
+        //}
         public async Task<List<TruckEntity>> GetAllTrucksAsync()
         {
             return await _context.Trucks.ToListAsync();
