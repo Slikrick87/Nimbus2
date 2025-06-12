@@ -2,6 +2,13 @@ Nimbus is a Navigational application that currently only targets windows
 
 Created using a .NET Maui Framework with Blazor pages. Built for Server Side and Web Assembly
 
+
+***This project requires a google maps API key to be set in the Nimbus.shared/Pages/Map.razor file for geocoding and map to work properly***
+You can reach me on linkedin at:
+https://www.linkedin.com/in/rickylynnthomasjr/
+Email me at:  
+Ricky Thomas
+mailto:rjtom476@gmail.com
 --------------------------------------------------------------------------------
 Will have to run some commands in powershell to get the database up and running
 or just clicking to initialize a new database in the project's home page will work as well but with provided sample data
