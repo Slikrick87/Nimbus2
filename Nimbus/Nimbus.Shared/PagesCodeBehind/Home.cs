@@ -13,8 +13,8 @@ namespace Nimbus.Shared.Pages
         //private bool isUpdateButtonDisabled = true;
         public RouteEntity? route;
         public TruckEntity? truck;
-        public TruckEntity? truckCheck;
-        public RouteEntity? routeCheck;
+        public bool? truckCheck;
+        public bool? routeCheck;
         public bool isDbEmpty = false;
         public void OnCheckboxChange(ChangeEventArgs e, TruckEntity truck)
         {
@@ -32,10 +32,13 @@ namespace Nimbus.Shared.Pages
         {
             try
             {
-                truckCheck = await TruckRepository.GetTruckByIdAsync(1);
-                routeCheck = await RouteRepository.GetRouteByIdAsync(1);
+                var allTrucks = await TruckRepository.GetAllTrucksAsync();
+                truckCheck = allTrucks != null && allTrucks.Count > 0;
+
+                var allRoutes = await RouteRepository.GetAllRoutesAsync();
+                routeCheck = allRoutes != null && allTrucks.Count > 0;
             }
-            catch 
+            catch
             {
                 truckCheck = null;
                 routeCheck = null;

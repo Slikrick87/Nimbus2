@@ -7,6 +7,7 @@
 <PageTitle>view MMRs</PageTitle>
 <td><button class="btn btn-primary" @onclick="() => openFilterDates()">Filter List by Dates</button></td>
 <td><button class="btn btn-primary" @onclick="() => openFilterTruckID()">Filter List by TruckID</button></td>
+<td><button class="btn btn-primary" @onclick="() => ShowAllMMR()">Show All MMRs</button></td>
 
 @if (filterCheck == false)
 {
@@ -36,7 +37,7 @@
                         <button class="btn btn-primary" @onclick="() => MMRRepository.DeleteMMRAsync(mmr.id)">Delete</button>
                     </td>
                 </tr>
-            })
+            }
         </tbody>
     </table>
 }
@@ -66,29 +67,32 @@
             </div>
         </div>
     </div>
-    if (filterTruckId)
-    {
-        <div class="modal show d-block" tabindex="-1" style="background:rgba(0,0,0,0.5)">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Filter MMRs by Truck ID</h5>
-                        <button type="button" class="btn-close" @onclick="CloseModal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="truckId" class="form-label">Truck ID</label>
-                            <InputNumber id="truckIdInput" class="form-control" @bind-Value="truckId" />
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" @onclick="CloseModal">Cancel</button>
-                        <button class="btn btn-primary" @onclick="FilterByTruckID">Apply</button>
-                    </div>
+}
+@if (filterTruckId)
+    
+{
+    
+<div class="modal show d-block" tabindex="-1" style="background:rgba(0,0,0,0.5)">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Filter MMRs by Truck ID</h5>
+                <button type="button" class="btn-close" @onclick="CloseModal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="truckId" class="form-label">Truck ID</label>
+                    <InputNumber id="truckIdInput" class="form-control" @bind-Value="truckId" />
                 </div>
             </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" @onclick="CloseModal">Cancel</button>
+                <button class="btn btn-primary" @onclick="FilterByTruckID">Apply</button>
+            </div>
         </div>
-    }
+    </div>
+</div>
+}
     @code {
     public bool filterCheck = true;
     public bool filterDates;
@@ -116,6 +120,12 @@
         StateHasChanged();
 
     }
+    public async Task ShowAllMMR()
+    {
+        mmrs = MMRRepository.GetAllMMRsAsync().Result;
+        filterCheck = false;
+        StateHasChanged();
+    }
     public async Task DateFilterCheck()
     {
         filterDates = true;
@@ -135,5 +145,4 @@
         filterTruckId = true;
         StateHasChanged();
     }
-}
 }
