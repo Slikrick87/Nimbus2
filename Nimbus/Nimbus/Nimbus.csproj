@@ -61,6 +61,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\GoogleAPICall.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -85,6 +89,7 @@
   <ItemGroup>
     <None Include="..\Nimbus.Shared\Pages\Component.razor" Link="Component.razor" />
     <None Include="..\Nimbus.Shared\Pages\Component1.razor" Link="Component1.razor" />
+    <None Include="wwwroot\GoogleAPICall.js" />
   </ItemGroup>
 
 </Project>

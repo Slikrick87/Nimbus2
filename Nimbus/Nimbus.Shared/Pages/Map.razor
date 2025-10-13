@@ -21,62 +21,60 @@
 
 <h3>Map</h3>
 <div id="map" style="height:500px;width:100%;"></div>
+<script src="https://maps.googleapis.com/maps/api/js?key=@Keys.mapsKey" defer></script>
 <script>
-
-    let map;
+        let map;
 
     async function geocodeAddress(address) {
-    console.log("Geocoding address:", address);
-    return new Promise((resolve, reject) => {
-    const geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ address: address }, (results, status) => {
-    if (status === 'OK') {
-    const location = {
-    lat: results[0].geometry.location.lat(),
-    lng: results[0].geometry.location.lng()
-    };
-    console.log("Geocoded location:", location);
-    resolve(JSON.stringify(location));
-    } else {
-    reject(status);
-    }
-    });
-    });
+      return new Promise((resolve, reject) => {
+        const geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ address: address }, (results, status) => {
+          if (status === 'OK') {
+            const location = {
+              lat: results[0].geometry.location.lat(),
+              lng: results[0].geometry.location.lng()
+            };
+            resolve(JSON.stringify(location)); // This returns the coordinates as a JSON string
+          } else {
+            reject(status);
+          }
+        });
+      });
     }
 
-    async function initMap(locationsJson) {
-    map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: 37.250626, lng: -83.195503 },
-    zoom: 7,
-    });
-    const DemoMarker = new google.maps.Marker({
-    position: { lat: 37.250626, lng: -83.195503 },
-    map: map,
-    title: "Demo Marker",
-    label: "0",
-    zIndex: 00
-    });
-    const locations = JSON.parse(locationsJson);
-    locations.forEach(location, index => {
-    console.log("Adding marker at:", location.lat, location.lng, );
-    new google.maps.Marker({
-    position:  { lat: location.lat, lng: location.lng },
-    map: map,
-    title: 'Stop ${index + 1}',
-    label: '${index +1}',
-    zIndex: index + 1,
-    //label: way to differiantate stops preferably by numbers
-    });
-    })
+    window.initMap = async function initMap(locationsJson) {
+      // Parse through the incoming locations on manifest
+      const locations = JSON.parse(locationsJson);
+      console.log(locations);
+
+      // The location of first stop in list
+      const position = { lat: locations[0].lat, lng: locations[0].lng };
+      
+      
+      const { Map } = await google.maps.importLibrary("maps");
+      const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+
+      // The map, centered at position which is first stop in tuple
+      map = new Map(document.getElementById("map"), {
+        zoom: 14,
+        center: position,
+        mapId: "DEMO_MAP_ID",
+      });
+
+      // Add a marker for each location
+      locations.forEach((location, index) => {
+        new AdvancedMarkerElement({
+          map: map,
+          position: { lat: location.lat, lng: location.lng },
+          title: `Stop ${index + 1}`,
+          zIndex: location.index
+        });
+      });
     }
-
-
-
-
 
 </script>
-@* <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={Place Api I Sent Here}"></script> *@
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=@Keys.mapsKey"></script>
+
 @* <div id="orderedStops"> *@
 <table class="table">
     @if (SelectionService.selectedRoute != null && SelectionService.selectedRoute.stops != null && SelectionService.orderedStopsForRoute != null)
@@ -93,30 +91,19 @@
             </tr>
         </thead>
         <tbody>
+            
             @* @SelectionService.orderedStopsForRoute = SelectionService.selectedRoute.stops.OrderBy(s => s.order).ToList(); *@
-            @foreach (Address stop in SelectionService.orderedStopsForRoute)
+            @foreach (var tuple in SelectionService.orderedStopsForRoute.Select((stop, i) => new { stop, i }))
             {
-                int index = @SelectionService.orderedStopsForRoute.IndexOf(stop);
-                
                 <tr>
-
-                    <td>@stop.index+1</td>
-                    <td>@stop.streetNumber</td>
-                    <td>@stop.streetName</td>
-                    <td>@stop.city</td>
-                    <td>@stop.state</td>
-                    <td>@stop.zipCode</td>
-                    <td><button @onclick="() => MoveUp(index)">Up</button></td>
-                    <td><button @onclick="() => MoveDown(index)">Down</button></td>
-                    @* @stop.streetNumber 
-                    @stop.streetName
-                    @stop.city 
-                    @stop.state 
-                    @stop.zipCode
-                    <button @onclick="() => MoveUp(index)">Up</button>
-                    <button @onclick="() => MoveDown(index)">Down</button> *@
-                    @* <button @onclick="() => WindowOpen(stop)">Get Directions</button> *@
-                    @* </li> *@
+                    <td>@(tuple.i + 1)</td>
+                    <td>@tuple.stop.streetNumber</td>
+                    <td>@tuple.stop.streetName</td>
+                    <td>@tuple.stop.city</td>
+                    <td>@tuple.stop.state</td>
+                    <td>@tuple.stop.zipCode</td>
+                    <td><button @onclick="() => MoveUp(tuple.i)">Up</button></td>
+                    <td><button @onclick="() => MoveDown(tuple.i)">Down</button></td>
                 </tr>
             }
         </tbody>
@@ -142,9 +129,13 @@
         try
         {
             await GetAddressesAndGeocode();
-            var serializedLocations = JsonSerializer.Serialize(SelectionService.orderedStopsForRoute.ToList());
-            await JS.InvokeVoidAsync("initMap", serializedLocations);
-            StateHasChanged();
+            var locations = JsonSerializer.Serialize(SelectionService.orderedStopsForRoute
+                .Where(a => a.Lat.HasValue && a.Lng.HasValue)
+                .Select(a => new { lat = a.Lat.Value, lng = a.Lng.Value })
+                .ToList());
+            //var serializedLocations = JsonSerializer.Serialize(locations);
+            await JS.InvokeVoidAsync("initMap", locations);
+            //StateHasChanged();
         }
         catch (Exception ex)
         {
@@ -165,17 +156,21 @@
 
                 //var json = await JS.InvokeAsync<string>("geocodeAddress", address);
                 //var location = JsonSerializer.Deserialize<GeoCodeResult>(json);
-                var addressJson = addresses.Select(a => $"{a.streetNumber} {a.streetName}, {a.city}, {a.state} {a.zipCode}").ToList();
+                //var addressJson = addresses.Select(a => $"{a.streetNumber} {a.streetName}, {a.city}, {a.state} {a.zipCode}").ToList();
 
                 //locationsGeoCode.Add(location);
                 try
                 {
-                    var jsonLatLng = await JS.InvokeAsync<string>("geocodeAddress", address);
+                    var formattedAddress = $"{address.streetNumber} {address.streetName}, {address.city}, {address.state} {address.zipCode}";
+                    var jsonLatLng = await JS.InvokeAsync<string>("geocodeAddress", formattedAddress);
+                    Debug.WriteLine($"Coordinates in json {jsonLatLng}");
                     var location = JsonSerializer.Deserialize<GeoCodeResult>(jsonLatLng);
                     address.Lng = location.lng;
                     address.Lat = location.lat;
-                    Debug.WriteLine($"Location Coordinates successfully updated");
-                    locationsJson.Add(JsonSerializer.Serialize(address));
+                    String coordinatesForAddress = ($"lat:{address.Lat}, lng:{address.Lng}");
+                    Debug.WriteLine($"Location Coordinates successfully updated Coordinates:{address.Lat}, {address.Lng}");
+                    locationsJson.Add(coordinatesForAddress);
+                    Debug.WriteLine($"What was added to locationsJson: {address.streetName}");
                 }
                 catch { Debug.WriteLine("Coordinate retrieval unsuccessful."); }
             }
