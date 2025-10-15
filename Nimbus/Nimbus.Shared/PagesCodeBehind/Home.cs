@@ -3,6 +3,8 @@ using Nimbus.Shared.Entities;
 using Nimbus.Shared.Logic;
 using Nimbus.Shared.Repositories;
 using Nimbus.Shared.Services;
+using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Nimbus.Shared.Pages
 {
@@ -16,6 +18,9 @@ namespace Nimbus.Shared.Pages
         public bool? truckCheck;
         public bool? routeCheck;
         public bool isDbEmpty = false;
+        public bool showConfirmation = false;
+        public string confirmMessage = "The new mileage is less than the current mileage. Are you sure you want to proceed?";
+        
         public void OnCheckboxChange(ChangeEventArgs e, TruckEntity truck)
         {
             if ((bool)e.Value)
@@ -74,13 +79,36 @@ namespace Nimbus.Shared.Pages
         //        isUpdateButtonDisabled = true;
         //    }
         //}
+        public async Task RequestMileageUpdateAsync()
+        {
+            if (SelectionService.selectedTruck.mileage > updatedMileage)
+            {
+                showConfirmation = true;
+                StateHasChanged();
+            }
+            else
+            {
+                await UpdateMileageAsync();
+            }
+        }
         public async Task UpdateMileageAsync()
         {
-            if (SelectionService.selectedTruck != null)
+            try
             {
-                currentMileage = updatedMileage;
-                TruckRepository.AdjustMileageAsync(SelectionService.selectedTruck.id, updatedMileage);
+                showConfirmation = false;
+                if (SelectionService.selectedTruck != null)
+                {
+                    await TruckRepository.AdjustMileageAsync(SelectionService.selectedTruck.id, updatedMileage);
+                }
             }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error updating mileage: {ex.Message}");
+            }
+        }
+        public async Task CancelUpdateAsync()
+        {
+            await Task.FromResult(showConfirmation = false);
         }
         //Just for Doods and dudettes to test out the DB more easily.
         public async Task AddToDBForTesting()

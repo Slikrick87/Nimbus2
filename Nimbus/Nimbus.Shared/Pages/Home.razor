@@ -11,10 +11,10 @@
 
 <PageTitle>Home</PageTitle>
 @if (truckCheck == null && routeCheck == null)
-          {
+{
     <h1>Testing Dudes (or dudettes) click below to add entities to Database for testing out application.</h1>
-<button class="btn btn-primary" @onclick="AddToDBForTesting">Give 'em Shell!</button>
-<h4>Unfortunately ran out of time and you may have to switch pages then come back to get correct home page to load</h4>
+    <button class="btn btn-primary" @onclick="AddToDBForTesting">Give 'em Shell!</button>
+    <h4>Unfortunately ran out of time and you may have to switch pages then come back to get correct home page to load</h4>
 }
 @if (truckCheck == null && routeCheck == null)
 {
@@ -24,7 +24,7 @@
         <NavLink class="nav-link" href="addRoute">
             <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Add Route
         </NavLink>
-        </div>
+    </div>
     <div class="nav-item px-3">
         <NavLink class="nav-link" href="addTruck">
             <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Add Truck
@@ -39,8 +39,28 @@ else if (SelectionService.selectedTruck != null)
         <h3>Enter Current Mileage: </h3>
         <h3>@SelectionService.selectedTruck.mileage</h3>
         <input type="number" @bind="updatedMileage" Min="@currentMileage"/>
-        <button class="btn btn-primary" @onclick="UpdateMileageAsync">Set Mileage</button>
+        <button class="btn btn-primary" @onclick="RequestMileageUpdateAsync">Set Mileage</button>
     </div>
+    if (showConfirmation)
+    {
+        <div class="modal fade show d-block" tabindex="-1" style="background: rgba(0,0,0,0.5);" aria-modal="true" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirm Mileage Update</h5>
+                        <button type="button" class="btn-close" @onclick="CancelUpdateAsync" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>@confirmMessage</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @onclick="CancelUpdateAsync">Cancel</button>
+                        <button type="button" class="btn btn-primary" @onclick="UpdateMileageAsync">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
     <div class="nav-item px-3">
         <NavLink class="nav-link" href="selectRoute">
             <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Select Truck
