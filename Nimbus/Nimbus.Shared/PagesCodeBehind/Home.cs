@@ -21,9 +21,9 @@ namespace Nimbus.Shared.Pages
         public bool showConfirmation = false;
         public string confirmMessage = "The new mileage is less than the current mileage. Are you sure you want to proceed?";
         
-        public void OnCheckboxChange(ChangeEventArgs e, TruckEntity truck)
+        public void TruckSelectionButton(TruckEntity truck)
         {
-            if ((bool)e.Value)
+            if (truck != null)
             {
                 SelectionService.selectedTruck = truck;
             }

@@ -54,6 +54,7 @@ namespace Nimbus.Shared.Repositories
         }
         public async Task AdjustMileageAsync(int id, int mileage)
         {
+
             TruckEntity truck = await GetTruckByIdAsync(id);
             int difference = 0;
             await Task.Run(() =>
@@ -61,12 +62,15 @@ namespace Nimbus.Shared.Repositories
                 difference = mileage - truck.mileage;
             });
             await Task.Run(() =>
-            { 
-            truck.tireFD += difference;
-            truck.tireRD += difference;
-            truck.tireFP += difference;
-            truck.tireRP += difference;
-            truck.oilChange += difference;
+            {
+                if (difference > 0)
+                {
+                    truck.tireFD += difference;
+                    truck.tireRD += difference;
+                    truck.tireFP += difference;
+                    truck.tireRP += difference;
+                    truck.oilChange += difference;
+                }
             truck.mileage = mileage;
             });
             await _context.SaveChangesAsync();

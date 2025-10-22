@@ -1,10 +1,49 @@
 ﻿@* @using Microsoft.AspNetCore.Components *@
 @inherits LayoutComponentBase
 
+<style>
+    .page {
+        position: relative;
+        background-color: #F6F3EF;
+        min-height: 100vh;
+    }
+    .sidebar-toggle {
+        position: absolute;
+        text-align: center;
+        top: 0;
+        left: auto;
+        right: auto;
+        width: 75px;
+        height: 80px;
+        background: linear-gradient(135deg, #4169E1 0%, #E6953C 100%);
+        padding: 0;
+        cursor: pointer;
+        z-index: 2000;
+    }
+
+        .sidebar-toggle.open {
+            left: 250px; 
+        }
+
+        .sidebar-toggle::before {
+            content: "";
+            display: block;
+            width: 0;
+            height: 0;
+            border-top: 32px solid #212529;
+            border-right: 32px solid transparent;
+        }
+</style>
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+    <button class="sidebar-toggle @(showSidebar ? "open" : "")" @onclick="ToggleSidebar">
+        @(showSidebar ? "Hide Nav Bar" : "Show Nav Bar")
+    </button>
+    @if (showSidebar)
+    {
+        <div class="sidebar">
+            <NavMenu />
+        </div>
+    }
 
     <main>
         <div class="top-row px-4">
@@ -22,3 +61,12 @@
     <a href="." class="reload">Reload</a>
     <span class="dismiss">🗙</span>
 </div>
+
+@code {
+    private bool showSidebar = false;
+
+    private void ToggleSidebar()
+    {
+        showSidebar = !showSidebar;
+    }
+}

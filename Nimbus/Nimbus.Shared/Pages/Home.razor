@@ -7,9 +7,34 @@
 @inject SelectionService SelectionService;
 @inject IFormFactor FormFactor
 
-@* Page is a working mess sorry *@
+
+<style>
+    .custom-truck-btn {
+        width: 500px;
+        background-color: #E6953C;
+        color: black;
+        border-radius: 6px;
+        margin-bottom: 8px;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+        .custom-truck-btn:hover {
+            background-color: #4169E1;
+            color: #F6F3EF;
+        }
+
+    .center-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 80vh; /* Optional: vertically center */
+        text-align: center;
+    }
+</style>
 
 <PageTitle>Home</PageTitle>
+<div class="center-content">
 @if (truckCheck == null && routeCheck == null)
 {
     <h1>Testing Dudes (or dudettes) click below to add entities to Database for testing out application.</h1>
@@ -73,8 +98,22 @@ else if (SelectionService.selectedTruck == null)
     foreach (TruckEntity truck in TruckRepository.GetAllTrucksAsync().Result)
     {
         <div>
-            <input type="checkbox" @onchange="e => OnCheckboxChange(e, truck)" />
-            <label>Truck Id: @truck.id Mileage: @truck.mileage</label>
+                @* Replace the checkbox with a button for each truck *@
+                <div>
+                    <div>
+                        <button class="btn custom-truck-btn" @onclick="() => OnButtonClick(truck)">
+                            Select Truck Id: @truck.id Mileage: @truck.mileage
+                        </button>
+                    </div>
+                </div>
+
+                @code {
+                    // Add a handler for the button click
+                    private void OnButtonClick(TruckEntity truck)
+                    {
+                        TruckSelectionButton(truck); // Reuse your selection logic if desired
+                    }
+                }
         </div>
     }
 
@@ -102,6 +141,7 @@ else
         </NavLink>
     </div>
 }
+</div>
 @* 
     //scaffold Api call to database to meet requirement to serve an api repository endpoints
     //Can move @code to a partial class with same name such as Home.cs
