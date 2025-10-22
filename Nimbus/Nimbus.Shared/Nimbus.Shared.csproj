@@ -40,7 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\GoogleAPICall.js" />
+    <None Include="wwwroot\googleMapsWaypoints.js" />
   </ItemGroup>
 
 </Project>
