@@ -7,44 +7,87 @@
 @page "/addMMR"
 
 <PageTitle>Add MMR</PageTitle>
+<!-- Full-page flex container to center horizontally + vertically -->
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card-body">
+            <h3 class="text-center mb-4">Add MMR</h3>
 
-<h3>AddMMR</h3>
+            <EditForm Model="editModel" OnValidSubmit="HandleValidSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
 
-<div class="d-flex">
-    <form method="post">
-        <div>
-            <label for="truckId">Truck ID:</label>
-            <input type="number" name="truckId" @bind="truckId" />
-            <br />
-            <label for="mileage">Mileage:</label>
-            <input type="number" name="mileage" @bind="mileage" />
-            <br /> 
-            <label for="cost">Cost:</label>
-            <input type="number" name="cost" @bind="cost" step="0.01" />
-            <br />
-            <label for="description">Description:</label>
-            <input type="text" name="description" @bind="description" />
-            <br />
-            <label for="date">Date:</label>
-            <input type="date" name="date" @bind="date" />
-            <br />
-            <button class="btn btn-primary" @onclick="AddNewMMR">Confirm</button>
-            <br />
+                <div class="container">
+                    <div class="row mb-3 align-items-center">
+                        <label class="col-sm-4 col-form-label text-end">Truck ID:</label>
+                        <div class="col-sm-6">
+                            <InputNumber id="truckId" class="form-control" @bind-Value="editModel.TruckId" />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 align-items-center">
+                        <label class="col-sm-4 col-form-label text-end">Mileage:</label>
+                        <div class="col-sm-6">
+                            <InputNumber id="mileage" class="form-control" @bind-Value="editModel.Mileage" />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 align-items-center">
+                        <label class="col-sm-4 col-form-label text-end">Cost:</label>
+                        <div class="col-sm-6">
+                            <InputNumber id="cost" class="form-control" @bind-Value="editModel.Cost" step="0.01" />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 align-items-center">
+                        <label class="col-sm-4 col-form-label text-end">Description:</label>
+                        <div class="col-sm-6">
+                            <InputText id="description" class="form-control" @bind-Value="editModel.Description" />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 align-items-center">
+                        <label class="col-sm-4 col-form-label text-end">Date:</label>
+                        <div class="col-sm-6">
+                            <InputDate id="date" class="form-control" @bind-Value="editModel.Date" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-6">
+                            <button type="submit" class="btn btn-primary">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </EditForm>
         </div>
-    </form>
-</div>
+    </div>
 
 @code {
-    public int truckId;
-    public TruckEntity truck;
-    public int mileage;
-    public decimal cost;
-    public string description;
-    public DateTime date;
-    public async Task AddNewMMR()
+    private MaintenanceEntity editModel = new MaintenanceEntity
     {
-        truck = await TruckRepository.GetTruckByIdAsync(truckId);
-        MaintenanceEntity maintenance = await MMRRepository.CreateNewMMRAsync(mileage, cost, description, date, truck, truckId);
+        Date = DateTime.Today,
+        Description = string.Empty
+    };
+
+    public TruckEntity? truck;
+
+    private async Task HandleValidSubmit()
+    {
+        // Lookup truck and create + save MMR using your repository methods
+        truck = await TruckRepository.GetTruckByIdAsync(editModel.TruckId);
+        var maintenance = await MMRRepository.CreateNewMMRAsync(
+            editModel.Mileage,
+            editModel.Cost,
+            editModel.Description ?? string.Empty,
+            editModel.Date,
+            truck ?? new TruckEntity(),
+            editModel.TruckId);
+
         await MMRRepository.AddMMRAsync(maintenance);
+
+        // Optionally reset form or navigate
+        editModel = new MaintenanceEntity { Date = DateTime.Today, Description = string.Empty };
+        StateHasChanged();
     }
 }
