@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.StaticFiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.UseUrls("http://0.0.0.0:5000");
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
@@ -21,10 +22,10 @@ builder.Services.AddRazorComponents()
 builder.Services.AddDbContext<DataContext>();
 
 builder.Services.AddSingleton<IFormFactor, FormFactor>()
-.AddSingleton<IAddressRepository, AddressRepository>()
-.AddSingleton<ITruckRepository, TruckRepository>()
-.AddSingleton<IRouteRepository, RouteRepository>()
-.AddSingleton<SelectionService>();
+.AddScoped<IAddressRepository, AddressRepository>()
+.AddScoped<ITruckRepository, TruckRepository>()
+.AddScoped<IRouteRepository, RouteRepository>()
+.AddScoped<SelectionService>();
 
 builder.Services.AddControllers();
 
@@ -43,7 +44,10 @@ else
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseStaticFiles(); 
 app.UseAntiforgery();

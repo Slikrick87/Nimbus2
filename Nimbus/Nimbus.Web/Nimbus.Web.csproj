@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <OutputType>Exe</OutputType>
@@ -9,10 +9,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Nimbus.Web.Client\Nimbus.Web.Client.csproj" />
-    <PackageReference Include="FluentAssertions" Version="8.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.3" />
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.3" />
-    <PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.50" />
+    <PackageReference Include="FluentAssertions" Version="8.8.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.10" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.10" />
+    <PackageReference Include="Microsoft.Maui.Essentials" Version="9.0.120" />
 	<!--<PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.3.0" />-->
 
   </ItemGroup>
