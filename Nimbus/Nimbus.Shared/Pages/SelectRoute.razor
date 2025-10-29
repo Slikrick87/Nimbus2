@@ -6,13 +6,38 @@
 @inject SelectionService SelectionService;
 @page "/selectRoute"
 
+
+<style>
+    .custom-truck-btn {
+        width: 500px;
+        background-color: #E6953C;
+        color: black;
+        border-radius: 6px;
+        margin-bottom: 8px;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+        .custom-truck-btn:hover {
+            background-color: #4169E1;
+            color: #F6F3EF;
+        }
+
+    .center-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 50vh; /* Optional: vertically center */
+        text-align: center;
+    }
+</style>
+
 <h3>Select Route</h3>
-<form method="post">
+<form method="post" class="center-content">
     <ul>
         @foreach (RouteEntity route in routes)
         {
-            <li>ID: @route.Id Area: @route.nickName</li>
-            <button color="Primary Color" class="btn btn-primary" @onclick="() => ChooseRoute(route.Id)">Select</button>
+            <button class="custom-truck-btn" @onclick="() => ChooseRoute(route.Id)">Route ID: @route.Id Area Name: @route.nickName</button>
         }
     </ul>
 </form>
@@ -22,7 +47,8 @@
     <h3>Selected Route: @SelectionService.selectedRoute.Id</h3>
     <button color="Primary Color" class="btn btn-primary" @onclick="LinkTruckAndRouteAsync" disabled ="@isLoading">Set Truck To Route</button>
 }
-<div class="nav-item px-3">
+<div class="nav-item px-3"
+     style="background-color: #4169E1">
     <NavLink class="nav-link" href="addStop">
         <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Add New Stops
     </NavLink>

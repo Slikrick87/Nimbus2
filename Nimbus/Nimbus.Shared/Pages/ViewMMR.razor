@@ -45,7 +45,8 @@
 {
     <div class="modal show d-block" tabindex="-1" style="background:rgba(0,0,0,0.5)">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content"
+                 style="background-color:#B1A7B5">
                 <div class="modal-header">
                     <h5 class="modal-title">Filter MMRs by Year and Month</h5>
                     <button type="button" class="btn-close" @onclick="CloseModal"></button>
@@ -61,8 +62,14 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" @onclick="CloseModal">Cancel</button>
-                    <button class="btn btn-primary" @onclick="FilterByMonth">Apply</button>
+                    <button type="button"
+                            style="background-color:#E6953C;color:#000000;border:none;padding:6px 10px;border-radius:4px" @onclick="CloseModal">
+                            Cancel
+                    </button>
+                    <button type="button"
+                            style="background-color:#2447FF;color:#FFFFFF;border:none;padding:6px 10px;border-radius:4px" @onclick="FilterByMonth">
+                        Apply
+                    </button>
                 </div>
             </div>
         </div>
@@ -74,20 +81,30 @@
     
 <div class="modal show d-block" tabindex="-1" style="background:rgba(0,0,0,0.5)">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
+        <div class="modal-content"
+                 style="background-color:#B1A7B5">
+            <div class="modal-header"
+                     style="background-color:#B1A7B5">
                 <h5 class="modal-title">Filter MMRs by Truck ID</h5>
                 <button type="button" class="btn-close" @onclick="CloseModal"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body"
+                     style="background-color:#B1A7B5">
                 <div class="mb-3">
                     <label for="truckId" class="form-label">Truck ID</label>
                     <InputNumber id="truckIdInput" class="form-control" @bind-Value="truckId" />
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" @onclick="CloseModal">Cancel</button>
-                <button class="btn btn-primary" @onclick="FilterByTruckID">Apply</button>
+            <div class="modal-footer"
+                     style="background-color:#B1A7B5">
+                    <button type="button"
+                            style="background-color:#E6953C;color:#000000;border:none;padding:6px 10px;border-radius:4px" @onclick="CloseModal">
+                        Cancel
+                    </button>
+                    <button type="button"
+                            style="background-color:#2447FF;color:#FFFFFF;border:none;padding:6px 10px;border-radius:4px" @onclick="FilterByTruckID">
+                        Apply
+                    </button>
             </div>
         </div>
     </div>

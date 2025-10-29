@@ -3,6 +3,32 @@
 @using Nimbus.Shared.Services;
 @inject ITruckRepository TruckRepository;
 @page "/viewTrucks"
+
+<style>
+    .custom-truck-btn {
+        width: 500px;
+        background-color: #E6953C;
+        color: black;
+        border-radius: 6px;
+        margin-bottom: 8px;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+        .custom-truck-btn:hover {
+            background-color: #4169E1;
+            color: #F6F3EF;
+        }
+
+    .center-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 80vh; /* Optional: vertically center */
+        text-align: center;
+    }
+</style>
+
 <h3>ViewTrucks</h3>
 <table class="table">
         <thead>
