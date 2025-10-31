@@ -8,41 +8,18 @@
 @inject IFormFactor FormFactor
 
 
-<style>
-    .custom-truck-btn {
-        width: 500px;
-        background-color: #E6953C;
-        color: black;
-        border-radius: 6px;
-        margin-bottom: 8px;
-        transition: background-color 0.2s, color 0.2s;
-    }
-
-        .custom-truck-btn:hover {
-            background-color: #4169E1;
-            color: #F6F3EF;
-        }
-
-    .center-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 80vh; /* Optional: vertically center */
-        text-align: center;
-    }
-</style>
-
 <PageTitle>Home</PageTitle>
 <div class="center-content">
 @if (truckCheck == null && routeCheck == null)
 {
+    // code to create a database for testing application if no database exists already
     <h1>Testing Dudes (or dudettes) click below to add entities to Database for testing out application.</h1>
     <button class="btn btn-primary" @onclick="AddToDBForTesting">Give 'em Shell!</button>
     <h4>Unfortunately ran out of time and you may have to switch pages then come back to get correct home page to load</h4>
 }
 @if (truckCheck == null && routeCheck == null)
 {
+    // empty database code
     <h1>No Trucks or Routes Found</h1>
     <h2>Please add Trucks and Routes To Database</h2>
     <div class="nav-item px-3">
@@ -108,10 +85,9 @@ else if (SelectionService.selectedTruck == null)
                 </div>
 
                 @code {
-                    // Add a handler for the button click
                     private void OnButtonClick(TruckEntity truck)
                     {
-                        TruckSelectionButton(truck); // Reuse your selection logic if desired
+                        TruckSelectionButton(truck); 
                     }
                 }
         </div>
